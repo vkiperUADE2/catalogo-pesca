@@ -3,3 +3,158 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #061b33;
+  color: #f5f7fa;
+}
+
+header {
+  background: linear-gradient(90deg, #061b33, #0b4f8a);
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 24px;
+  color: #d7e84f;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #d7e84f;
+}
+
+main {
+  min-height: 80vh;
+}
+
+section {
+  padding: 80px 40px;
+}
+
+section h2 {
+  font-size: 42px;
+  margin-bottom: 15px;
+  color: #d7e84f;
+}
+
+section p {
+  font-size: 20px;
+  margin-bottom: 25px;
+  color: #dceeff;
+}
+
+button {
+  background-color: #d7e84f;
+  color: #061b33;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f0ff70;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-container img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.categorias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.categoria-card {
+  background: linear-gradient(145deg, #0b4f8a, #07233f);
+  border: 2px solid #d7e84f;
+  border-radius: 16px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.categoria-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 0px 20px rgba(215, 232, 79, 0.4);
+}
+
+.categoria-card h3 {
+  font-size: 28px;
+  color: #d7e84f;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.producto-card {
+  background-color: #0b2d42;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #1e5d8f;
+  transition: 0.3s;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+.producto-imagen {
+  height: 220px;
+  background: linear-gradient(145deg, #0b4f8a, #07233f);
+}
+
+.producto-card h3 {
+  padding: 15px 15px 5px;
+  color: #d7e84f;
+}
+
+.producto-card p {
+  padding: 0 15px;
+  color: #c9d6e2;
+}
+
+.producto-card h4 {
+  padding: 15px;
+  font-size: 24px;
+}
+
+.producto-card button {
+  margin: 0 15px 15px;
+  width: calc(100% - 30px);
+}
