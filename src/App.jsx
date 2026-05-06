@@ -1,6 +1,7 @@
 import Header from './components/Header'
 import Productos from './components/Productos'
 import Categorias from './components/Categorias'
+import Excursiones from './components/Excursiones'
 
 const categorias = [
   "Cañas",
@@ -32,6 +33,19 @@ const productos = [
   }
 ]
 
+const excursiones = [
+  {
+    id: 1,
+    titulo: "Excursión de pejerrey",
+    descripcion: "Salidas de pesca embarcada para temporada de pejerrey."
+  },
+  {
+    id: 2,
+    titulo: "Salida de pesca guiada",
+    descripcion: "Consultá fechas disponibles, horarios y condiciones."
+  }
+]
+
 function App() {
   return (
     <div>
@@ -50,6 +64,8 @@ function App() {
         <Categorias categorias={categorias} />
 
         <Productos productos={productos} />
+
+        <Excursiones excursiones={excursiones} />
       </main>
     </div>
   )
