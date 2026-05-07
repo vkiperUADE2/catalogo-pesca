@@ -49,14 +49,66 @@ const excursiones = [
 ]
 
 function App() {
+  
   const [carritoAbierto, setCarritoAbierto] = useState(false)
+  
+  const [carrito, setCarrito] = useState([])
+  
+  function agregarAlCarrito(producto) {
+    const productoExistente = carrito.find((item) => item.id === producto.id)
+
+    if (productoExistente) {
+      const carritoActualizado = carrito.map((item) =>
+        item.id === producto.id
+          ? { ...item, cantidad: item.cantidad + 1 }
+          : item
+      )
+
+      setCarrito(carritoActualizado)
+    } else {
+      setCarrito([...carrito, { ...producto, cantidad: 1 }])
+    }
+
+    setCarritoAbierto(true)
+  }
+  function sumarProducto(id) {
+    const carritoActualizado = carrito.map((item) =>
+      item.id === id
+        ? { ...item, cantidad: item.cantidad + 1 }
+        : item
+    )
+
+    setCarrito(carritoActualizado)
+  }
+
+  function restarProducto(id) {
+    const carritoActualizado = carrito
+      .map((item) =>
+        item.id === id
+          ? { ...item, cantidad: item.cantidad - 1 }
+          : item
+      )
+      .filter((item) => item.cantidad > 0)
+
+    setCarrito(carritoActualizado)
+  }
+
+  function eliminarProducto(id) {
+    const carritoActualizado = carrito.filter((item) => item.id !== id)
+
+    setCarrito(carritoActualizado)
+  }
   return (
     <div>
       <Header abrirCarrito={() => setCarritoAbierto(true)} />
 
-      <Carrito 
+      <Carrito
         abierto={carritoAbierto}
         cerrarCarrito={() => setCarritoAbierto(false)}
+        carrito={carrito}
+        sumarProducto={sumarProducto}
+        restarProducto={restarProducto}
+        eliminarProducto={eliminarProducto}
       />
 
       <main id="inicio">
@@ -71,7 +123,10 @@ function App() {
 
         <Categorias categorias={categorias} />
 
-        <Productos productos={productos} />
+        <Productos 
+          productos={productos}
+          agregarAlCarrito={agregarAlCarrito}
+        />
 
         <Excursiones excursiones={excursiones} />
       </main>

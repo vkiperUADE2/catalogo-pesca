@@ -205,3 +205,22 @@ button:hover {
   width: 100%;
   margin-top: 25px;
 }
+
+.carrito-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.carrito-item {
+  background-color: #0b2d42;
+  border: 1px solid #1e5d8f;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.carrito-item h4 {
+  color: #d7e84f;
+  margin-bottom: 5px;
+}

@@ -1,4 +1,4 @@
-function Productos({ productos }) {
+function Productos({ productos, agregarAlCarrito }) {
   return (
     <section>
       <h2>Productos destacados</h2>
@@ -14,7 +14,9 @@ function Productos({ productos }) {
 
             <h4>${producto.precio}</h4>
 
-            <button>Agregar al carrito</button>
+            <button onClick={() => agregarAlCarrito(producto)}>
+              Agregar al carrito
+            </button>
           </div>
         ))}
       </div>
