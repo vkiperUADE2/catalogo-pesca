@@ -158,3 +158,50 @@ button:hover {
   margin: 0 15px 15px;
   width: calc(100% - 30px);
 }
+
+.carrito-btn {
+  background-color: #d7e84f;
+  color: #061b33;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.carrito-btn:hover {
+  background-color: #f0ff70;
+}
+
+.carrito-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 360px;
+  height: 100vh;
+  background-color: #07233f;
+  border-left: 2px solid #d7e84f;
+  padding: 25px;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.carrito-panel.abierto {
+  right: 0;
+}
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.carrito-header button {
+  padding: 8px 12px;
+}
+
+.whatsapp-btn {
+  width: 100%;
+  margin-top: 25px;
+}

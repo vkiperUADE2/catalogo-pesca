@@ -2,6 +2,8 @@ import Header from './components/Header'
 import Productos from './components/Productos'
 import Categorias from './components/Categorias'
 import Excursiones from './components/Excursiones'
+import Carrito from './components/Carrito'
+import { useState } from 'react'
 
 const categorias = [
   "Cañas",
@@ -47,9 +49,15 @@ const excursiones = [
 ]
 
 function App() {
+  const [carritoAbierto, setCarritoAbierto] = useState(false)
   return (
     <div>
-      <Header />
+      <Header abrirCarrito={() => setCarritoAbierto(true)} />
+
+      <Carrito 
+        abierto={carritoAbierto}
+        cerrarCarrito={() => setCarritoAbierto(false)}
+      />
 
       <main id="inicio">
         <section>

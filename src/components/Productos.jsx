@@ -14,7 +14,7 @@ function Productos({ productos }) {
 
             <h4>${producto.precio}</h4>
 
-            <button>Consultar por WhatsApp</button>
+            <button>Agregar al carrito</button>
           </div>
         ))}
       </div>

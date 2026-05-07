@@ -1,6 +1,6 @@
 import logo from '../assets/logo.png'
 
-function Header() {
+function Header({ abrirCarrito }) {
   return (
     <header>
       <div className="logo-container">
@@ -13,6 +13,9 @@ function Header() {
         <a href="#catalogo">Catálogo</a>
         <a href="#excursiones">Excursiones</a>
         <a href="#contacto">Contacto</a>
+        <button className="carrito-btn" onClick={abrirCarrito}>
+            🛒 Carrito
+        </button>
       </nav>
     </header>
   )
