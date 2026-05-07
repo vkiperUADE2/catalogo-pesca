@@ -1,4 +1,6 @@
 function Productos({ productos, agregarAlCarrito }) {
+  const formatoPrecio = new Intl.NumberFormat('es-AR')
+
   return (
     <section>
       <h2>Productos destacados</h2>
@@ -12,7 +14,7 @@ function Productos({ productos, agregarAlCarrito }) {
 
             <p>{producto.categoria}</p>
 
-            <h4>${producto.precio}</h4>
+            <h4>${formatoPrecio.format(producto.precio)}</h4>
 
             <button onClick={() => agregarAlCarrito(producto)}>
               Agregar al carrito

@@ -1,9 +1,9 @@
-function Excursiones({ excursiones }) {
+function Excursiones({ excursiones, telefono }) {
   return (
     <section id="excursiones">
       <h2>Excursiones</h2>
 
-      <div className="productos-grid">
+      <div className="productos-grid excursiones-grid">
         {excursiones.map((excursion) => (
           <div className="producto-card" key={excursion.id}>
             <div className="producto-imagen"></div>
@@ -12,7 +12,13 @@ function Excursiones({ excursiones }) {
 
             <p>{excursion.descripcion}</p>
 
-            <button>Consultar por WhatsApp</button>
+            <a
+              href={`https://wa.me/${telefono}?text=${encodeURIComponent(`Hola, quiero consultar por la excursión: ${excursion.titulo}`)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <button>Consultar por WhatsApp</button>
+            </a>
           </div>
         ))}
       </div>
