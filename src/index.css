@@ -26,6 +26,7 @@ header h1 {
 
 nav {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 
@@ -184,6 +185,7 @@ button:hover {
   padding: 25px;
   transition: 0.3s;
   z-index: 1000;
+  overflow-y: auto;
 }
 
 .carrito-panel.abierto {
@@ -209,18 +211,58 @@ button:hover {
 .carrito-items {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
   margin-top: 20px;
 }
 
 .carrito-item {
-  background-color: #0b2d42;
+  background: linear-gradient(145deg, #0b2d42, #061b33);
   border: 1px solid #1e5d8f;
-  border-radius: 10px;
-  padding: 15px;
+  border-radius: 14px;
+  padding: 14px;
 }
 
 .carrito-item h4 {
   color: #d7e84f;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.carrito-item p {
+  color: #c9d6e2;
+  margin-bottom: 6px;
+}
+
+.carrito-item h5 {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.carrito-controles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.carrito-controles button {
+  padding: 7px 10px;
+}
+
+.carrito-controles span {
+  min-width: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.eliminar-btn {
+  margin-left: auto;
+  background-color: #d9534f;
+  color: white;
+}
+
+.carrito-total {
+  border-top: 1px solid #1e5d8f;
+  padding-top: 18px;
+  margin-top: 10px;
 }
