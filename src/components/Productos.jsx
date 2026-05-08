@@ -26,7 +26,11 @@ function Productos({ productos, agregarAlCarrito }) {
       <div className="productos-grid">
         {productos.map((producto) => (
           <div className="producto-card" key={producto.id}>
-            <div className="producto-imagen"></div>
+            <img
+              className="producto-imagen"
+              src={producto.imagen}
+              alt={producto.nombre}
+            />
 
             <h3>{producto.nombre}</h3>
 

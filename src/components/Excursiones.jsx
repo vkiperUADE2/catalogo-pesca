@@ -5,12 +5,12 @@ function Excursiones({ excursiones, telefono }) {
 
       <div className="productos-grid excursiones-grid">
         {excursiones.map((excursion) => (
-          <div className="producto-card" key={excursion.id}>
-            <div className="producto-imagen"></div>
-
-            <h3>{excursion.titulo}</h3>
-
-            <p>{excursion.descripcion}</p>
+          <div className="producto-card excursion-card" key={excursion.id}>
+            <img
+              className="excursion-imagen"
+              src={excursion.imagen}
+              alt={excursion.titulo}
+            />
 
             <a
               href={`https://wa.me/${telefono}?text=${encodeURIComponent(`Hola, quiero consultar por la excursión: ${excursion.titulo}`)}`}

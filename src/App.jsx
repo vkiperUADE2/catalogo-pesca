@@ -6,6 +6,11 @@ import Excursiones from './components/Excursiones'
 import Carrito from './components/Carrito'
 import Contacto from './components/Contacto'
 import hero from './assets/hero.jpg'
+import canaPejerrey from './assets/cana-pejerrey.jpg'
+import reelFrontalLiviano from './assets/reel-frontal-liviano.jpg'
+import lineaTresBoyas from './assets/linea-3-boyas.jpg'
+import excursionPejerrey from './assets/excursion-pejerrey.jpg'
+import pescaGuiada from './assets/pesca-guiada.jpg'
 
 const categorias = [
   'Cañas',
@@ -21,19 +26,22 @@ const productos = [
     id: 1,
     nombre: 'Caña pejerrey telescópica',
     categoria: 'Cañas',
-    precio: 45000
+    precio: 45000,
+    imagen: canaPejerrey
   },
   {
     id: 2,
     nombre: 'Reel frontal liviano',
     categoria: 'Reeles',
-    precio: 38000
+    precio: 38000,
+    imagen: reelFrontalLiviano
   },
   {
     id: 3,
     nombre: 'Línea pejerrey 3 boyas',
     categoria: 'Boyas y Líneas',
-    precio: 9500
+    precio: 9500,
+    imagen: lineaTresBoyas
   }
 ]
 
@@ -41,12 +49,14 @@ const excursiones = [
   {
     id: 1,
     titulo: 'Excursión de pejerrey',
-    descripcion: 'Salidas de pesca embarcada para temporada de pejerrey.'
+    descripcion: 'Salidas de pesca embarcada para temporada de pejerrey.',
+    imagen: excursionPejerrey
   },
   {
     id: 2,
     titulo: 'Salida de pesca guiada',
-    descripcion: 'Consultá fechas disponibles, horarios y condiciones.'
+    descripcion: 'Consultá fechas disponibles, horarios y condiciones.',
+    imagen: pescaGuiada
   }
 ]
 
@@ -75,7 +85,6 @@ function App() {
     } else {
       setCarrito([...carrito, { ...producto, cantidad: 1 }])
     }
-
   }
 
   function sumarProducto(id) {
@@ -137,8 +146,8 @@ function App() {
               <h2>Todo para tu próxima jornada de pesca</h2>
 
               <p>
-                Artículos de pesca, accesorios y
-                excursiones para preparar la salida con confianza.
+                Artículos de pesca, accesorios y excursiones para preparar la
+                salida con confianza.
               </p>
 
               <a href="#catalogo">
