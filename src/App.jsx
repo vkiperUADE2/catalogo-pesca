@@ -76,7 +76,6 @@ function App() {
       setCarrito([...carrito, { ...producto, cantidad: 1 }])
     }
 
-    setCarritoAbierto(true)
   }
 
   function sumarProducto(id) {

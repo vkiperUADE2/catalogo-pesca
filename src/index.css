@@ -311,6 +311,16 @@ section p {
   padding: 10px 16px;
 }
 
+.producto-card .producto-agregado-btn {
+  background: var(--verde-agua);
+  color: white;
+  box-shadow: 0 0 0 3px rgba(73, 182, 170, 0.18);
+}
+
+.producto-card .producto-agregado-btn:hover {
+  background: var(--verde-agua);
+}
+
 .producto-card a button {
   width: 100%;
   margin: 0;
