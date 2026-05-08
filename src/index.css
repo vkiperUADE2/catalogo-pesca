@@ -1,10 +1,14 @@
 :root {
   --azul-noche: #061b33;
+  --azul-tinta: #041426;
   --azul-profundo: #082742;
   --azul-card: #0b314f;
   --azul-intenso: #0b63a8;
   --lima: #d7e84f;
   --lima-claro: #f0ff70;
+  --celeste-hielo: #d9ecfb;
+  --verde-agua: #49b6aa;
+  --coral: #ff8a5b;
   --texto: #f5f7fa;
   --texto-suave: #c9d6e2;
   --borde: rgba(215, 232, 79, 0.28);
@@ -22,8 +26,9 @@ html {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--azul-noche);
+  font-family: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
+  background:
+    linear-gradient(180deg, var(--azul-noche) 0%, var(--azul-tinta) 58%, #071c2d 100%);
   color: var(--texto);
 }
 
@@ -35,6 +40,7 @@ button {
   padding: 12px 20px;
   border-radius: 8px;
   font-weight: 800;
+  font-family: inherit;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -96,9 +102,21 @@ section {
 }
 
 section h2 {
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
   font-size: clamp(28px, 4vw, 38px);
   margin-bottom: 10px;
-  color: var(--lima);
+  color: white;
+  letter-spacing: 0;
+}
+
+section h2::after {
+  content: "";
+  width: 54px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--lima);
+  display: block;
+  margin-top: 12px;
 }
 
 section p {
@@ -161,11 +179,16 @@ section p {
 }
 
 .hero-content h2 {
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
   max-width: 540px;
   font-size: clamp(36px, 5.5vw, 56px);
   line-height: 1.04;
   margin-bottom: 16px;
   color: white;
+}
+
+.hero-content h2::after {
+  display: none;
 }
 
 .hero-content p {
@@ -186,6 +209,22 @@ section p {
   text-align: center;
 }
 
+#catalogo h2::after,
+.productos-section h2::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.productos-section {
+  background:
+    linear-gradient(180deg, rgba(7, 28, 45, 0.62), rgba(6, 20, 38, 0.92)),
+    linear-gradient(90deg, rgba(73, 182, 170, 0.1), transparent 45%, rgba(215, 232, 79, 0.08));
+}
+
+.productos-section h2 {
+  text-align: center;
+}
+
 .productos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -196,8 +235,8 @@ section p {
 .categoria-card {
   min-height: 86px;
   padding: 14px;
-  background: linear-gradient(145deg, var(--azul-intenso), #07233f);
-  border: 1px solid var(--borde);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(217, 236, 251, 0.14);
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -212,44 +251,52 @@ section p {
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
 }
 
+.categoria-card:hover {
+  border-color: rgba(215, 232, 79, 0.5);
+  background: rgba(11, 99, 168, 0.28);
+}
+
 .categoria-card h3 {
   font-size: clamp(16px, 1.5vw, 20px);
-  color: var(--lima);
+  color: var(--celeste-hielo);
   text-align: center;
 }
 
 .producto-card {
-  background-color: var(--azul-card);
+  background: linear-gradient(180deg, rgba(217, 236, 251, 0.08), rgba(255, 255, 255, 0.045));
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(217, 236, 251, 0.14);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .producto-imagen {
   height: 145px;
   background:
-    radial-gradient(circle at 26% 30%, rgba(215, 232, 79, 0.34), transparent 28%),
-    linear-gradient(145deg, var(--azul-intenso), #07233f);
+    linear-gradient(135deg, rgba(6, 27, 51, 0.15), rgba(6, 27, 51, 0.78)),
+    radial-gradient(circle at 78% 22%, rgba(215, 232, 79, 0.34), transparent 24%),
+    linear-gradient(145deg, #1e768f, #0a2a44 62%, #071626);
 }
 
 .producto-card h3 {
   min-height: 56px;
   padding: 15px 16px 5px;
-  color: var(--lima);
+  color: white;
   font-size: 19px;
   line-height: 1.2;
 }
 
 .producto-card p {
   padding: 0 16px;
-  color: var(--texto-suave);
+  color: var(--verde-agua);
   font-size: 15px;
+  font-weight: 800;
 }
 
 .producto-card h4 {
   padding: 2px 16px 14px;
   font-size: 22px;
+  color: var(--lima);
 }
 
 .producto-card a {
@@ -445,7 +492,9 @@ section p {
 }
 
 .contacto-section {
-  background: var(--azul-profundo);
+  background:
+    linear-gradient(135deg, rgba(11, 99, 168, 0.2), rgba(6, 20, 38, 0.95)),
+    var(--azul-profundo);
 }
 
 .contacto-contenido {
@@ -479,7 +528,7 @@ section p {
   padding: 15px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.055);
+  background: rgba(255, 255, 255, 0.07);
   display: grid;
   grid-template-columns: 46px 1fr;
   gap: 14px;
@@ -497,7 +546,7 @@ section p {
   width: 46px;
   height: 46px;
   border-radius: 8px;
-  background: var(--lima);
+  background: linear-gradient(135deg, var(--lima), var(--verde-agua));
   color: var(--azul-noche);
   display: inline-flex;
   align-items: center;

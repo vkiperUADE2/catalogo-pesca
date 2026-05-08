@@ -2,7 +2,7 @@ function Productos({ productos, agregarAlCarrito }) {
   const formatoPrecio = new Intl.NumberFormat('es-AR')
 
   return (
-    <section>
+    <section className="productos-section">
       <h2>Productos destacados</h2>
 
       <div className="productos-grid">
