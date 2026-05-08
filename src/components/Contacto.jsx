@@ -34,7 +34,7 @@ function Contacto({ telefono }) {
           <span className="section-kicker">Atención y consultas</span>
           <h2>Contacto</h2>
           <p>
-            Escribinos por WhatsApp, seguinos en Instagram o acercate al local.
+            Escribinos por WhatsApp, seguinos en Instagram o acercate al local (Lunes a Sabados de 10:30 a 19:00 hs).
           </p>
         </div>
 
