@@ -5,7 +5,7 @@ function Header({ abrirCarrito, cantidadCarrito }) {
     <header>
       <div className="logo-container">
         <img src={logo} alt="Logo Pierre Bandenay" />
-        <h1>Casa de Pesca Pierre Bandenay</h1>
+        <h1>PierreBandenay</h1>
       </div>
 
       <nav>
