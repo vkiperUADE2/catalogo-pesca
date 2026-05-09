@@ -268,12 +268,14 @@ section p {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid rgba(217, 236, 251, 0.14);
+  display: flex;
+  flex-direction: column;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .producto-imagen {
   width: 100%;
-  height: 145px;
+  height: clamp(210px, 17vw, 270px);
   display: block;
   object-fit: cover;
   background:
@@ -283,23 +285,23 @@ section p {
 }
 
 .producto-card h3 {
-  min-height: 56px;
-  padding: 15px 16px 5px;
+  min-height: 0;
+  padding: 12px 14px 4px;
   color: white;
-  font-size: 19px;
-  line-height: 1.2;
+  font-size: 20px;
+  line-height: 1.15;
 }
 
 .producto-card p {
-  padding: 0 16px;
+  padding: 0 14px;
   color: var(--verde-agua);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
 }
 
 .producto-card h4 {
-  padding: 2px 16px 14px;
-  font-size: 22px;
+  padding: 2px 14px 10px;
+  font-size: 20px;
   color: var(--lima);
 }
 
@@ -311,8 +313,8 @@ section p {
 .producto-card button {
   width: calc(100% - 32px);
   min-height: 40px;
-  margin: 0 16px 16px;
-  padding: 10px 16px;
+  margin: auto 16px 14px;
+  padding: 9px 16px;
 }
 
 .producto-card .producto-agregado-btn {
@@ -535,16 +537,16 @@ section p {
   right: 22px;
   bottom: 22px;
   z-index: 950;
-  min-height: 56px;
-  padding: 0 18px;
-  border-radius: 999px;
+  width: 62px;
+  height: 62px;
+  min-height: 0;
+  padding: 0;
+  border-radius: 50%;
   background: #25d366;
-  color: #061b33;
+  color: white;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-weight: 900;
   box-shadow: 0 14px 30px rgba(6, 27, 51, 0.28);
 }
 
@@ -556,6 +558,16 @@ section p {
 .whatsapp-flotante:hover {
   transform: translateY(-2px);
   background: #35e175;
+}
+
+.whatsapp-flotante::before {
+  content: none;
+}
+
+.whatsapp-flotante svg {
+  width: 35px;
+  height: 35px;
+  fill: currentColor;
 }
 
 .contacto-section {
@@ -850,13 +862,13 @@ header:hover {
 }
 
 .header-main {
-  width: min(1500px, calc(100% - 48px));
+  width: calc(100% - 140px);
   min-height: 128px;
   margin: 0 auto;
   padding: 16px 0 12px;
   display: grid;
-  grid-template-columns: minmax(440px, 1fr) auto minmax(360px, 1fr);
-  gap: 28px;
+  grid-template-columns: minmax(470px, 1fr) auto minmax(390px, 1fr);
+  gap: 34px;
   align-items: center;
 }
 
@@ -870,6 +882,7 @@ header:hover {
 
 .header-left {
   justify-self: start;
+  margin-left: 0;
 }
 
 .header-right {
@@ -877,11 +890,12 @@ header:hover {
   align-items: flex-end;
   align-self: center;
   padding-top: 0;
+  margin-right: 0;
 }
 
 .search-box {
-  width: min(420px, 100%);
-  height: 46px;
+  width: min(445px, 100%);
+  height: 50px;
   border: 1px solid rgba(217, 236, 251, 0.55);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
@@ -895,8 +909,9 @@ header:hover {
   height: 100%;
   border: 0;
   outline: 0;
-  padding: 0 16px;
+  padding: 0 18px;
   font: inherit;
+  font-size: 15px;
   color: #102033;
 }
 
@@ -905,7 +920,7 @@ header:hover {
 }
 
 .search-box span {
-  min-width: 86px;
+  min-width: 94px;
   height: 100%;
   display: inline-flex;
   align-items: center;
@@ -950,12 +965,12 @@ header h1 span:last-child {
 
 nav {
   flex-wrap: wrap;
-  gap: 18px;
+  gap: 21px;
 }
 
 nav a {
   color: #d9ecfb;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -1038,8 +1053,9 @@ nav a:hover {
   background: var(--lima);
   color: var(--azul-noche);
   border: 0;
-  min-height: 48px;
-  padding: 13px 22px;
+  min-height: 58px;
+  padding: 16px 28px;
+  font-size: 15px;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
 }
 

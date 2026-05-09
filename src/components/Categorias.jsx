@@ -18,7 +18,7 @@ function Categorias({ categorias, seleccionarCategoria }) {
   return (
     <section id="catalogo">
       <span className="section-kicker">{'Cat\u00e1logo'}</span>
-      <h2>{'Categor\u00edas'}</h2>
+      <h2>Productos</h2>
 
       <div className="categorias-carousel">
         <button
