@@ -20,7 +20,7 @@ function Productos({ productos, agregarAlCarrito }) {
   }
 
   return (
-    <section className="productos-section">
+    <section className="productos-section" id="productos">
       <h2>Productos destacados</h2>
 
       <div className="productos-grid">
