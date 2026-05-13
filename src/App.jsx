@@ -11,6 +11,7 @@ import reelFrontalLiviano from './assets/reel-frontal-liviano.jpg'
 import lineaTresBoyas from './assets/linea-3-boyas.jpg'
 import excursionPejerrey from './assets/excursion-pejerrey.jpg'
 import pescaGuiada from './assets/pesca-guiada.jpg'
+import armaExcursion from './assets/arma-tu-excursion.jpg'
 import categoriaCanas from './assets/categoria-canas.jpg'
 import categoriaReels from './assets/categoria-reels.jpg'
 import categoriaBoyasLineas from './assets/categoria-boyas-lieneas.jpg'
@@ -191,6 +192,12 @@ const excursiones = [
     titulo: 'Salida de pesca guiada',
     descripcion: 'Consult\u00e1 fechas disponibles, horarios y condiciones.',
     imagen: pescaGuiada
+  },
+  {
+    id: 3,
+    titulo: 'Arm\u00e1 tu excursi\u00f3n',
+    descripcion: 'Coordinamos una salida a medida para tu grupo.',
+    imagen: armaExcursion
   }
 ]
 

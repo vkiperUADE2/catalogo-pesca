@@ -333,26 +333,52 @@ section p {
   margin: 0;
 }
 
+#excursiones {
+  background: #ffffff;
+  color: #102033;
+  padding-top: clamp(30px, 4svh, 44px);
+  padding-bottom: clamp(30px, 4svh, 44px);
+  scroll-margin-top: var(--header-alto);
+}
+
+#excursiones h2 {
+  color: #102033;
+  text-align: center;
+}
+
+#excursiones h2::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .excursiones-grid {
-  grid-template-columns: repeat(2, minmax(280px, 460px));
+  width: min(100%, 1240px);
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: clamp(18px, 2vw, 28px);
   justify-content: center;
-  align-items: start;
+  align-items: stretch;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }
 
 .excursion-card {
-  background: rgba(255, 255, 255, 0.045);
-  border-color: rgba(217, 236, 251, 0.18);
+  background: #082742;
+  border-color: rgba(6, 27, 51, 0.12);
+  box-shadow: 0 14px 34px rgba(6, 27, 51, 0.12);
+  height: 100%;
 }
 
 .excursion-imagen {
   width: 100%;
   display: block;
-  aspect-ratio: 753 / 1024;
-  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background: #082742;
 }
 
 .excursion-card a {
-  margin-top: 16px;
+  margin: 18px 16px 16px;
 }
 
 .carrito-btn {
@@ -799,9 +825,9 @@ header:hover {
 .promo-carousel {
   height: 40px;
   overflow: hidden;
-  background: #ffffff;
-  color: #082742;
-  border-bottom: 1px solid #dce5ec;
+  background: linear-gradient(90deg, #041426, #082742 48%, #041426);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(217, 236, 251, 0.14);
   font-size: clamp(12px, 1.2vw, 14px);
   font-weight: 900;
   text-align: center;
@@ -822,25 +848,25 @@ header:hover {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #082742;
+  color: #f5f7fa;
   letter-spacing: 0;
-  text-shadow: none;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.28);
 }
 
 .promo-icono {
   width: 28px;
   height: 28px;
   border-radius: 999px;
-  background: rgba(11, 103, 172, 0.1);
+  background: rgba(215, 232, 79, 0.16);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #0b67ac;
+  color: var(--lima);
   font-size: 16px;
 }
 
 .promo-mensaje.destacado {
-  color: #0b67ac;
+  color: var(--lima);
 }
 
 .promo-carousel-track .promo-mensaje[aria-hidden="true"] {
