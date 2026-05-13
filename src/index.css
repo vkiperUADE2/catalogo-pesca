@@ -780,7 +780,7 @@ header {
   color: #ffffff;
   padding: 0;
   display: block;
-  border-top: 4px solid #0b67ac;
+  border-top: 0;
   border-bottom: 1px solid rgba(217, 236, 251, 0.18);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
 }
@@ -792,9 +792,9 @@ header:hover {
 .promo-carousel {
   height: 40px;
   overflow: hidden;
-  background: linear-gradient(90deg, #041426, #082742 48%, #041426);
-  color: #ffffff;
-  border-bottom: 1px solid rgba(217, 236, 251, 0.14);
+  background: #ffffff;
+  color: #082742;
+  border-bottom: 1px solid #dce5ec;
   font-size: clamp(12px, 1.2vw, 14px);
   font-weight: 900;
   text-align: center;
@@ -802,61 +802,61 @@ header:hover {
 }
 
 .promo-carousel-track {
-  width: 400%;
+  width: 300%;
   height: 40px;
   display: flex;
   animation: promo-slide 20s infinite;
 }
 
 .promo-mensaje {
-  width: 25%;
+  width: calc(100% / 3);
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #f5f7fa;
+  color: #082742;
   letter-spacing: 0;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.28);
+  text-shadow: none;
 }
 
 .promo-icono {
   width: 28px;
   height: 28px;
   border-radius: 999px;
-  background: rgba(215, 232, 79, 0.16);
+  background: rgba(11, 103, 172, 0.1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--lima);
+  color: #0b67ac;
   font-size: 16px;
 }
 
 .promo-mensaje.destacado {
-  color: var(--lima);
+  color: #0b67ac;
+}
+
+.promo-carousel-track .promo-mensaje[aria-hidden="true"] {
+  display: none;
 }
 
 @keyframes promo-slide {
   0%,
-  21% {
+  26% {
     transform: translateX(0);
   }
 
-  26%,
-  47% {
-    transform: translateX(-25%);
+  33%,
+  59% {
+    transform: translateX(calc(-100% / 3));
   }
 
-  52%,
-  73% {
-    transform: translateX(-50%);
+  66%,
+  92% {
+    transform: translateX(calc(-200% / 3));
   }
 
-  78%,
-  99.9% {
-    transform: translateX(-75%);
-  }
-
+  99%,
   100% {
     transform: translateX(0);
   }
@@ -868,7 +868,7 @@ header:hover {
   margin: 0 auto;
   padding: 16px 0 12px;
   display: grid;
-  grid-template-columns: minmax(280px, 1fr) auto max-content;
+  grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   grid-template-areas: "left brand cart";
   gap: clamp(18px, 2.5vw, 34px);
   align-items: center;
@@ -966,7 +966,7 @@ header h1 {
 }
 
 header h1 span:last-child {
-  color: var(--lima);
+  color: #f5f7fa;
 }
 
 nav {
@@ -1414,7 +1414,7 @@ nav a:hover {
   }
 
   .logo-container {
-    justify-self: start;
+    justify-self: center;
   }
 
   .logo-container img {
