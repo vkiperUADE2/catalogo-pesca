@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 function Carrito({
   abierto,
   cerrarCarrito,
@@ -8,6 +10,17 @@ function Carrito({
   telefono
 }) {
   const formatoPrecio = new Intl.NumberFormat('es-AR')
+
+  useEffect(() => {
+    if (!abierto) return undefined
+
+    const overflowAnterior = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = overflowAnterior
+    }
+  }, [abierto])
 
   const total = carrito.reduce(
     (acc, item) => acc + item.precio * item.cantidad,

@@ -379,7 +379,7 @@ section p {
 .carrito-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 3000;
   border-radius: 0;
   background: rgba(0, 0, 0, 0.46);
   cursor: default;
@@ -396,12 +396,14 @@ section p {
   right: min(-100vw, -430px);
   width: min(430px, 100vw);
   height: 100vh;
+  height: 100dvh;
   background: linear-gradient(180deg, #082742, #061b33);
   border-left: 1px solid var(--borde);
   padding: 24px;
   transition: right 0.28s ease;
-  z-index: 1000;
+  z-index: 3001;
   overflow-y: auto;
+  overscroll-behavior: contain;
   box-shadow: -26px 0 60px rgba(0, 0, 0, 0.35);
 }
 
@@ -410,11 +412,16 @@ section p {
 }
 
 .carrito-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 18px;
   margin-bottom: 24px;
+  padding-bottom: 12px;
+  background: linear-gradient(180deg, #082742 0%, #082742 78%, rgba(8, 39, 66, 0) 100%);
 }
 
 .carrito-header span {
@@ -1552,6 +1559,47 @@ nav a:hover {
   .carrito-btn {
     width: min(100%, 260px);
     justify-content: center;
+  }
+
+  .carrito-panel {
+    right: -100%;
+    width: 100%;
+    max-width: none;
+    border-left: 0;
+    padding:
+      max(16px, env(safe-area-inset-top))
+      max(16px, env(safe-area-inset-right))
+      max(18px, env(safe-area-inset-bottom))
+      max(16px, env(safe-area-inset-left));
+  }
+
+  .carrito-panel.abierto {
+    right: 0;
+  }
+
+  .carrito-header {
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .carrito-header h2 {
+    font-size: clamp(30px, 9vw, 38px);
+  }
+
+  .cerrar-carrito-btn {
+    width: 48px;
+    min-height: 48px;
+    flex: 0 0 auto;
+    font-size: 20px;
+  }
+
+  .carrito-item {
+    padding: 14px;
+  }
+
+  .carrito-total {
+    bottom: -18px;
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
   }
 
   .mega-menu-inner {
