@@ -13,6 +13,7 @@
   --texto-suave: #c9d6e2;
   --borde: rgba(215, 232, 79, 0.28);
   --sombra: 0 24px 60px rgba(0, 0, 0, 0.28);
+  --header-alto: 198px;
 }
 
 * {
@@ -228,7 +229,7 @@ section p {
 
 .productos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 18px;
   margin-top: 26px;
 }
@@ -862,13 +863,14 @@ header:hover {
 }
 
 .header-main {
-  width: calc(100% - 140px);
+  width: min(calc(100% - 40px), 1760px);
   min-height: 128px;
   margin: 0 auto;
   padding: 16px 0 12px;
   display: grid;
-  grid-template-columns: minmax(470px, 1fr) auto minmax(390px, 1fr);
-  gap: 34px;
+  grid-template-columns: minmax(280px, 1fr) auto max-content;
+  grid-template-areas: "left brand cart";
+  gap: clamp(18px, 2.5vw, 34px);
   align-items: center;
 }
 
@@ -881,11 +883,13 @@ header:hover {
 }
 
 .header-left {
+  grid-area: left;
   justify-self: start;
   margin-left: 0;
 }
 
 .header-right {
+  grid-area: cart;
   justify-self: end;
   align-items: flex-end;
   align-self: center;
@@ -895,6 +899,7 @@ header:hover {
 
 .search-box {
   width: min(445px, 100%);
+  min-width: 0;
   height: 50px;
   border: 1px solid rgba(217, 236, 251, 0.55);
   border-radius: 8px;
@@ -933,6 +938,7 @@ header:hover {
 }
 
 .logo-container {
+  grid-area: brand;
   flex-direction: row-reverse;
   gap: 16px;
   text-align: center;
@@ -1054,9 +1060,10 @@ nav a:hover {
   color: var(--azul-noche);
   border: 0;
   min-height: 58px;
-  padding: 16px 28px;
+  padding: 16px clamp(18px, 2vw, 28px);
   font-size: 15px;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
 }
 
 .carrito-btn:hover {
@@ -1152,8 +1159,10 @@ nav a:hover {
 #catalogo {
   background: #ffffff;
   color: #102033;
-  min-height: calc(100vh - 198px);
-  scroll-margin-top: 198px;
+  min-height: calc(100svh - var(--header-alto));
+  padding-top: clamp(28px, 5svh, 56px);
+  padding-bottom: clamp(28px, 5svh, 56px);
+  scroll-margin-top: var(--header-alto);
 }
 
 #catalogo .section-kicker,
@@ -1231,7 +1240,7 @@ nav a:hover {
 .categoria-card {
   flex: 0 0 calc((100% - 42px) / 4);
   position: relative;
-  min-height: clamp(360px, 36vw, 520px);
+  min-height: clamp(330px, calc(100svh - var(--header-alto) - 220px), 520px);
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -1374,9 +1383,61 @@ nav a:hover {
   color: #082742;
 }
 
+@media (max-width: 1180px) {
+  :root {
+    --header-alto: 234px;
+  }
+
+  .header-main {
+    grid-template-columns: 1fr max-content;
+    grid-template-areas:
+      "brand cart"
+      "left left";
+    gap: 14px 22px;
+    padding: 14px 0;
+  }
+
+  .header-left {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .search-box {
+    width: min(390px, 42vw);
+  }
+
+  nav {
+    justify-content: flex-end;
+  }
+
+  .logo-container {
+    justify-self: start;
+  }
+
+  .logo-container img {
+    width: 86px;
+    height: 70px;
+  }
+
+  header h1 {
+    font-size: clamp(27px, 4vw, 38px);
+  }
+}
+
 @media (max-width: 980px) {
+  :root {
+    --header-alto: 352px;
+  }
+
   .header-main {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "left"
+      "cart";
     justify-items: center;
     gap: 18px;
   }
@@ -1390,6 +1451,10 @@ nav a:hover {
 
   nav {
     justify-content: center;
+  }
+
+  .search-box {
+    width: min(445px, 100%);
   }
 
   .mega-menu {
@@ -1416,6 +1481,7 @@ nav a:hover {
 
   .categoria-card {
     flex-basis: calc((100% - 14px) / 2);
+    min-height: clamp(320px, calc(100svh - var(--header-alto) - 190px), 460px);
   }
 
   .categorias-carousel {
@@ -1432,6 +1498,10 @@ nav a:hover {
 }
 
 @media (max-width: 620px) {
+  :root {
+    --header-alto: 380px;
+  }
+
   .header-main {
     width: min(100% - 24px, 1180px);
     min-height: 0;
@@ -1439,7 +1509,49 @@ nav a:hover {
   }
 
   .search-box {
+    width: 100%;
     height: 44px;
+  }
+
+  .search-box input {
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .search-box span {
+    min-width: 76px;
+    font-size: 12px;
+  }
+
+  nav {
+    width: 100%;
+    gap: 12px 16px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .logo-container {
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .logo-container img {
+    width: 70px;
+    height: 58px;
+  }
+
+  header h1 {
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: clamp(26px, 8vw, 34px);
+    white-space: normal;
+  }
+
+  .carrito-btn {
+    width: min(100%, 260px);
+    justify-content: center;
   }
 
   .mega-menu-inner {
@@ -1480,6 +1592,15 @@ nav a:hover {
 
   .categoria-card {
     flex-basis: 100%;
-    min-height: 360px;
+    min-height: clamp(330px, calc(100svh - var(--header-alto) - 170px), 420px);
+  }
+
+  .productos-grid,
+  .excursiones-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-imagen {
+    height: clamp(190px, 58vw, 260px);
   }
 }

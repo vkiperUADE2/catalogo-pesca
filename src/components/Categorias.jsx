@@ -1,14 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const categoriasPorVista = 4
+function obtenerCategoriasPorVista() {
+  if (typeof window === 'undefined') return 4
+  if (window.matchMedia('(max-width: 620px)').matches) return 1
+  if (window.matchMedia('(max-width: 980px)').matches) return 2
+  return 4
+}
 
 function Categorias({ categorias, seleccionarCategoria }) {
   const [inicio, setInicio] = useState(0)
+  const [categoriasPorVista, setCategoriasPorVista] = useState(obtenerCategoriasPorVista)
   const ultimoInicio = Math.max(categorias.length - categoriasPorVista, 0)
+  const inicioVisible = Math.min(inicio, ultimoInicio)
+
+  useEffect(() => {
+    function actualizarCategoriasPorVista() {
+      setCategoriasPorVista(obtenerCategoriasPorVista())
+    }
+
+    actualizarCategoriasPorVista()
+    window.addEventListener('resize', actualizarCategoriasPorVista)
+
+    return () => window.removeEventListener('resize', actualizarCategoriasPorVista)
+  }, [])
 
   function cambiarCategorias(direccion) {
     setInicio((inicioActual) => {
-      const siguiente = inicioActual + direccion
+      const siguiente = Math.min(inicioActual, ultimoInicio) + direccion
       if (siguiente < 0) return 0
       if (siguiente > ultimoInicio) return ultimoInicio
       return siguiente
@@ -24,14 +42,14 @@ function Categorias({ categorias, seleccionarCategoria }) {
         <button
           className="categoria-flecha"
           onClick={() => cambiarCategorias(-1)}
-          disabled={inicio === 0}
+          disabled={inicioVisible === 0}
           aria-label="Ver categorias anteriores"
         >
           {'<'}
         </button>
 
         <div className="categorias-viewport">
-          <div className="categorias-grid" style={{ '--indice-categoria': inicio }}>
+          <div className="categorias-grid" style={{ '--indice-categoria': inicioVisible }}>
             {categorias.map((categoria) => (
               <a
                 className={`categoria-card ${categoria.nombre === 'Boyas y L\u00edneas' ? 'categoria-card-larga' : ''}`}
@@ -56,7 +74,7 @@ function Categorias({ categorias, seleccionarCategoria }) {
         <button
           className="categoria-flecha"
           onClick={() => cambiarCategorias(1)}
-          disabled={inicio === ultimoInicio}
+          disabled={inicioVisible === ultimoInicio}
           aria-label="Ver mas categorias"
         >
           {'>'}
