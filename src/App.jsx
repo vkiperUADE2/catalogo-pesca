@@ -5,6 +5,7 @@ import Categorias from './components/Categorias'
 import Excursiones from './components/Excursiones'
 import Carrito from './components/Carrito'
 import Contacto from './components/Contacto'
+import Admin from './components/Admin'
 import hero from './assets/hero.jpg'
 import canaPejerrey from './assets/cana-pejerrey.jpg'
 import reelFrontalLiviano from './assets/reel-frontal-liviano.jpg'
@@ -20,8 +21,9 @@ import categoriaCamping from './assets/categoria-camping.jpg'
 import categoriaCarnada from './assets/catalogo-carnada.jpg'
 import categoriaNautica from './assets/catalogo-nautica.jpg'
 import categoriaAccesorios from './assets/catalogo-accesorios.jpg'
+import { obtenerCategorias, obtenerSubcategorias } from './services/catalogService'
 
-const categorias = [
+const categoriasIniciales = [
   { nombre: 'Ca\u00f1as', slug: 'canas', inicial: 'CA', imagen: categoriaCanas },
   { nombre: 'Reeles', slug: 'reeles', inicial: 'RE', imagen: categoriaReels },
   { nombre: 'Boyas y L\u00edneas', slug: 'boyas-lineas', inicial: 'BL', imagen: categoriaBoyasLineas },
@@ -162,7 +164,7 @@ const productosPorCategoria = {
   ]
 }
 
-const productos = categorias.flatMap((categoria, categoriaIndex) =>
+const productos = categoriasIniciales.flatMap((categoria, categoriaIndex) =>
   productosPorCategoria[categoria.nombre].map(([nombre, precio, subcategoria], productoIndex) => ({
     id: categoriaIndex * 100 + productoIndex + 1,
     nombre,
@@ -228,6 +230,45 @@ const banners = [
 
 const telefonoWhatsApp = '5491178929344'
 
+function adaptarCategoria(categoria) {
+  const categoriaInicial = categoriasIniciales.find(
+    (item) => item.slug === categoria.slug
+  )
+
+  return {
+    id: categoria.id,
+    nombre: categoria.name,
+    slug: categoria.slug,
+    inicial: categoriaInicial?.inicial || categoria.name.slice(0, 2).toUpperCase(),
+    imagen: categoria.image_url || categoriaInicial?.imagen,
+    estado: categoria.status,
+    orden: categoria.sort_order
+  }
+}
+
+function agruparSubcategoriasPorCategoria(subcategorias) {
+  return subcategorias.reduce((acc, subcategoria) => {
+    const categoriaSlug = subcategoria.category?.slug
+    if (!categoriaSlug) return acc
+
+    const subcategoriasCategoria = acc[categoriaSlug] || []
+
+    return {
+      ...acc,
+      [categoriaSlug]: [
+        ...subcategoriasCategoria,
+        {
+          id: subcategoria.id,
+          nombre: subcategoria.name,
+          slug: subcategoria.slug,
+          estado: subcategoria.status,
+          orden: subcategoria.sort_order
+        }
+      ]
+    }
+  }, {})
+}
+
 function WhatsAppIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -246,13 +287,15 @@ function App() {
   const [bannerActivo, setBannerActivo] = useState(0)
   const [busqueda, setBusqueda] = useState('')
   const [rutaActual, setRutaActual] = useState(obtenerRutaActual)
+  const [categoriasCatalogo, setCategoriasCatalogo] = useState(categoriasIniciales)
+  const [subdivisionesCatalogoActuales, setSubdivisionesCatalogoActuales] = useState(subdivisionesCatalogo)
 
   const [categoriaRuta, subcategoriaRuta] = rutaActual.split('/')
-  const categoriaActiva = categorias.find(
+  const categoriaActiva = categoriasCatalogo.find(
     (categoria) => categoria.slug === categoriaRuta
   )
   const subcategoriaActiva = categoriaActiva
-    ? subdivisionesCatalogo[categoriaActiva.slug]?.find(
+    ? subdivisionesCatalogoActuales[categoriaActiva.slug]?.find(
         (subcategoria) => subcategoria.slug === subcategoriaRuta
       )
     : null
@@ -316,6 +359,34 @@ function App() {
 
     window.addEventListener('popstate', actualizarRuta)
     return () => window.removeEventListener('popstate', actualizarRuta)
+  }, [])
+
+  useEffect(() => {
+    async function cargarCategorias() {
+      try {
+        const categoriasSupabase = await obtenerCategorias()
+        setCategoriasCatalogo(categoriasSupabase.map(adaptarCategoria))
+      } catch (error) {
+        console.error('No se pudieron cargar las categorias.', error)
+      }
+    }
+
+    cargarCategorias()
+  }, [])
+
+  useEffect(() => {
+    async function cargarSubcategorias() {
+      try {
+        const subcategoriasSupabase = await obtenerSubcategorias()
+        setSubdivisionesCatalogoActuales(
+          agruparSubcategoriasPorCategoria(subcategoriasSupabase)
+        )
+      } catch (error) {
+        console.error('No se pudieron cargar las subcategorias.', error)
+      }
+    }
+
+    cargarSubcategorias()
   }, [])
 
   function navegarA(ruta) {
@@ -396,6 +467,10 @@ function App() {
     setCarrito(carritoActualizado)
   }
 
+  if (rutaActual === 'admin') {
+    return <Admin />
+  }
+
   return (
     <div>
       <Header
@@ -404,8 +479,8 @@ function App() {
         busqueda={busqueda}
         cambiarBusqueda={setBusqueda}
         navegarASeccion={navegarASeccion}
-        categorias={categorias}
-        subdivisionesCatalogo={subdivisionesCatalogo}
+        categorias={categoriasCatalogo}
+        subdivisionesCatalogo={subdivisionesCatalogoActuales}
         seleccionarCategoria={seleccionarCategoria}
         seleccionarSubcategoria={seleccionarSubcategoria}
       />
@@ -504,7 +579,7 @@ function App() {
             </section>
 
             <Categorias
-              categorias={categorias}
+              categorias={categoriasCatalogo}
               seleccionarCategoria={seleccionarCategoria}
             />
 
