@@ -1273,7 +1273,8 @@ nav a:hover {
 .categoria-card {
   flex: 0 0 calc((100% - 42px) / 4);
   position: relative;
-  min-height: clamp(330px, calc(100svh - var(--header-alto) - 220px), 520px);
+  aspect-ratio: 5 / 7;
+  min-height: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -1929,7 +1930,7 @@ nav a:hover {
 
   .categoria-card {
     flex-basis: calc((100% - 14px) / 2);
-    min-height: clamp(320px, calc(100svh - var(--header-alto) - 190px), 460px);
+    aspect-ratio: 5 / 7;
   }
 
   .categorias-carousel {
@@ -2081,7 +2082,7 @@ nav a:hover {
 
   .categoria-card {
     flex-basis: 100%;
-    min-height: clamp(330px, calc(100svh - var(--header-alto) - 170px), 420px);
+    aspect-ratio: 4 / 5;
   }
 
   .productos-grid,
