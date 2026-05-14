@@ -414,7 +414,16 @@ function App() {
     setRutaActual('')
 
     window.setTimeout(() => {
-      document.getElementById(seccion)?.scrollIntoView({ behavior: 'smooth' })
+      const elemento = document.getElementById(seccion)
+      if (!elemento) return
+
+      const headerAltura = document.querySelector('header')?.offsetHeight || 0
+      const posicion = elemento.getBoundingClientRect().top + window.scrollY
+
+      window.scrollTo({
+        top: Math.max(posicion - headerAltura, 0),
+        behavior: 'smooth'
+      })
     }, 0)
   }
 
