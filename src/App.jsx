@@ -21,7 +21,11 @@ import categoriaCamping from './assets/categoria-camping.jpg'
 import categoriaCarnada from './assets/catalogo-carnada.jpg'
 import categoriaNautica from './assets/catalogo-nautica.jpg'
 import categoriaAccesorios from './assets/catalogo-accesorios.jpg'
-import { obtenerCategorias, obtenerSubcategorias } from './services/catalogService'
+import {
+  obtenerCategorias,
+  obtenerProductos,
+  obtenerSubcategorias
+} from './services/catalogService'
 
 const categoriasIniciales = [
   { nombre: 'Ca\u00f1as', slug: 'canas', inicial: 'CA', imagen: categoriaCanas },
@@ -246,6 +250,27 @@ function adaptarCategoria(categoria) {
   }
 }
 
+function adaptarProducto(producto) {
+  const imagenPrincipal = producto.images?.[0]?.image_url
+
+  return {
+    id: producto.id,
+    nombre: producto.title,
+    marca: producto.brand,
+    categoria: producto.category?.name || '',
+    categoriaSlug: producto.category?.slug || '',
+    subcategoria: producto.subcategory?.slug || '',
+    subcategoriaNombre: producto.subcategory?.name || '',
+    precio: producto.price,
+    descripcion: producto.description,
+    destacado: producto.is_featured,
+    imagen: imagenPrincipal,
+    imagenes: producto.images || [],
+    slug: producto.slug,
+    creado: producto.created_at
+  }
+}
+
 function agruparSubcategoriasPorCategoria(subcategorias) {
   return subcategorias.reduce((acc, subcategoria) => {
     const categoriaSlug = subcategoria.category?.slug
@@ -289,10 +314,15 @@ function App() {
   const [rutaActual, setRutaActual] = useState(obtenerRutaActual)
   const [categoriasCatalogo, setCategoriasCatalogo] = useState(categoriasIniciales)
   const [subdivisionesCatalogoActuales, setSubdivisionesCatalogoActuales] = useState(subdivisionesCatalogo)
+  const [productosCatalogo, setProductosCatalogo] = useState([])
 
   const [categoriaRuta, subcategoriaRuta] = rutaActual.split('/')
+  const esRutaProducto = categoriaRuta === 'producto'
+  const productoDetalle = esRutaProducto
+    ? productosCatalogo.find((producto) => producto.slug === subcategoriaRuta)
+    : null
   const categoriaActiva = categoriasCatalogo.find(
-    (categoria) => categoria.slug === categoriaRuta
+    (categoria) => !esRutaProducto && categoria.slug === categoriaRuta
   )
   const subcategoriaActiva = categoriaActiva
     ? subdivisionesCatalogoActuales[categoriaActiva.slug]?.find(
@@ -306,17 +336,23 @@ function App() {
   )
 
   const busquedaNormalizada = busqueda.trim().toLowerCase()
+  const productosDestacadosAdmin = productosCatalogo
+    .filter((producto) => producto.destacado)
+    .slice(0, 6)
+  const productosRecientesAdmin = productosCatalogo.slice(0, 6)
   const productosHome = busquedaNormalizada
-    ? productos.filter((producto) =>
+    ? productosCatalogo.filter((producto) =>
         [producto.nombre, producto.categoria]
           .join(' ')
           .toLowerCase()
           .includes(busquedaNormalizada)
       )
-    : productosDestacados
+    : productosDestacadosAdmin.length > 0
+      ? productosDestacadosAdmin
+      : productosRecientesAdmin
 
   const productosCategoria = categoriaActiva
-    ? productos.filter((producto) => {
+    ? productosCatalogo.filter((producto) => {
         const coincideCategoria = producto.categoria === categoriaActiva.nombre
         const coincideSubcategoria = subcategoriaActiva
           ? producto.subcategoria === subcategoriaActiva.slug
@@ -389,6 +425,19 @@ function App() {
     cargarSubcategorias()
   }, [])
 
+  useEffect(() => {
+    async function cargarProductos() {
+      try {
+        const productosSupabase = await obtenerProductos()
+        setProductosCatalogo(productosSupabase.map(adaptarProducto))
+      } catch (error) {
+        console.error('No se pudieron cargar los productos.', error)
+      }
+    }
+
+    cargarProductos()
+  }, [])
+
   function navegarA(ruta) {
     window.history.pushState({}, '', ruta)
     setRutaActual(obtenerRutaActual())
@@ -405,6 +454,11 @@ function App() {
     event.preventDefault()
     setBusqueda('')
     navegarA(`/${categoriaSlug}/${subcategoriaSlug}`)
+  }
+
+  function verProducto(producto) {
+    if (!producto.slug) return
+    navegarA(`/producto/${producto.slug}`)
   }
 
   function navegarASeccion(event, seccion) {
@@ -515,7 +569,13 @@ function App() {
       </a>
 
       <main id="inicio">
-        {categoriaActiva ? (
+        {esRutaProducto ? (
+          <ProductoDetalle
+            producto={productoDetalle}
+            volver={() => navegarA('/')}
+            agregarAlCarrito={agregarAlCarrito}
+          />
+        ) : categoriaActiva ? (
           <section className="categoria-productos-page">
             <div className="categoria-page-header">
               <button className="volver-catalogo-btn" onClick={() => navegarA('/')}>
@@ -532,6 +592,7 @@ function App() {
             <Productos
               productos={productosCategoriaFiltrados}
               agregarAlCarrito={agregarAlCarrito}
+              verProducto={verProducto}
               titulo=""
               vacio="No encontramos productos en esta categoria."
             />
@@ -595,6 +656,7 @@ function App() {
             <Productos
               productos={productosHome}
               agregarAlCarrito={agregarAlCarrito}
+              verProducto={verProducto}
               titulo={busquedaNormalizada ? 'Resultados de busqueda' : 'Productos destacados'}
             />
 
@@ -605,6 +667,76 @@ function App() {
         )}
       </main>
     </div>
+  )
+}
+
+function ProductoDetalle({ producto, volver, agregarAlCarrito }) {
+  const formatoPrecio = new Intl.NumberFormat('es-AR')
+  const [imagenActiva, setImagenActiva] = useState(0)
+
+  if (!producto) {
+    return (
+      <section className="producto-detalle-page">
+        <button className="volver-catalogo-btn" onClick={volver}>
+          {'< Volver al inicio'}
+        </button>
+        <p className="sin-resultados">No encontramos este producto.</p>
+      </section>
+    )
+  }
+
+  const imagenes = producto.imagenes?.length > 0
+    ? producto.imagenes
+    : [{ image_url: producto.imagen }]
+  const imagenPrincipal = imagenes[imagenActiva]?.image_url || producto.imagen
+
+  return (
+    <section className="producto-detalle-page">
+      <button className="volver-catalogo-btn" onClick={volver}>
+        {'< Volver al inicio'}
+      </button>
+
+      <div className="producto-detalle-layout">
+        <div className="producto-detalle-galeria">
+          {imagenPrincipal && (
+            <img
+              className="producto-detalle-imagen"
+              src={imagenPrincipal}
+              alt={producto.nombre}
+            />
+          )}
+
+          {imagenes.length > 1 && (
+            <div className="producto-detalle-thumbs">
+              {imagenes.map((imagen, index) => (
+                <button
+                  className={imagenActiva === index ? 'activo' : ''}
+                  key={imagen.id || imagen.image_url}
+                  onClick={() => setImagenActiva(index)}
+                  aria-label={`Ver imagen ${index + 1}`}
+                >
+                  <img src={imagen.image_url} alt="" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="producto-detalle-info">
+          <span className="section-kicker">
+            {producto.categoria}
+            {producto.subcategoriaNombre ? ` > ${producto.subcategoriaNombre}` : ''}
+          </span>
+          <h2>{producto.nombre}</h2>
+          <p className="producto-detalle-marca">{producto.marca}</p>
+          <h3>${formatoPrecio.format(producto.precio)}</h3>
+          <p className="producto-detalle-descripcion">{producto.descripcion}</p>
+          <button onClick={() => agregarAlCarrito(producto)}>
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
+    </section>
   )
 }
 

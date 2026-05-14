@@ -8,6 +8,20 @@ export async function obtenerCategorias() {
   const { data, error } = await supabase
     .from('categories')
     .select('*')
+    .eq('status', 'Activo')
+    .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: true })
+
+  if (error) throw error
+  return data
+}
+
+export async function obtenerCategoriasAdmin() {
+  asegurarSupabaseConfigurado()
+
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: true })
 
@@ -24,11 +38,104 @@ export async function obtenerSubcategorias() {
       *,
       category:categories(*)
     `)
+    .eq('status', 'Activo')
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: true })
 
   if (error) throw error
   return data
+}
+
+export async function obtenerSubcategoriasAdmin() {
+  asegurarSupabaseConfigurado()
+
+  const { data, error } = await supabase
+    .from('subcategories')
+    .select(`
+      *,
+      category:categories(*)
+    `)
+    .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: true })
+
+  if (error) throw error
+  return data
+}
+
+export async function crearCategoria(categoria) {
+  asegurarSupabaseConfigurado()
+
+  const { data, error } = await supabase
+    .from('categories')
+    .insert(categoria)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function actualizarCategoria(id, categoria) {
+  asegurarSupabaseConfigurado()
+
+  const { data, error } = await supabase
+    .from('categories')
+    .update(categoria)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function eliminarCategoriaDefinitiva(id) {
+  asegurarSupabaseConfigurado()
+
+  const { error } = await supabase
+    .from('categories')
+    .delete()
+    .eq('id', id)
+
+  if (error) throw error
+}
+
+export async function crearSubcategoria(subcategoria) {
+  asegurarSupabaseConfigurado()
+
+  const { data, error } = await supabase
+    .from('subcategories')
+    .insert(subcategoria)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function actualizarSubcategoria(id, subcategoria) {
+  asegurarSupabaseConfigurado()
+
+  const { data, error } = await supabase
+    .from('subcategories')
+    .update(subcategoria)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function eliminarSubcategoriaDefinitiva(id) {
+  asegurarSupabaseConfigurado()
+
+  const { error } = await supabase
+    .from('subcategories')
+    .delete()
+    .eq('id', id)
+
+  if (error) throw error
 }
 
 export async function obtenerProductos() {
@@ -43,6 +150,7 @@ export async function obtenerProductos() {
       images:product_images(*),
       attributes:product_attributes(*)
     `)
+    .eq('status', 'Activo')
     .order('created_at', { ascending: false })
 
   if (error) throw error

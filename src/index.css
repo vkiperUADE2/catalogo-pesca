@@ -229,8 +229,9 @@ section p {
 
 .productos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  grid-template-columns: repeat(auto-fill, 300px);
   gap: 18px;
+  justify-content: center;
   margin-top: 26px;
 }
 
@@ -271,14 +272,17 @@ section p {
   border: 1px solid rgba(217, 236, 251, 0.14);
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .producto-imagen {
   width: 100%;
-  height: clamp(210px, 17vw, 270px);
+  aspect-ratio: 4 / 3;
+  height: auto;
   display: block;
   object-fit: cover;
+  object-position: center;
   background:
     linear-gradient(135deg, rgba(6, 27, 51, 0.15), rgba(6, 27, 51, 0.78)),
     radial-gradient(circle at 78% 22%, rgba(215, 232, 79, 0.34), transparent 24%),
@@ -336,8 +340,9 @@ section p {
 #excursiones {
   background: #ffffff;
   color: #102033;
-  padding-top: clamp(30px, 4svh, 44px);
-  padding-bottom: clamp(30px, 4svh, 44px);
+  min-height: calc(100svh - var(--header-alto));
+  padding-top: clamp(20px, 3svh, 32px);
+  padding-bottom: clamp(20px, 3svh, 32px);
   scroll-margin-top: var(--header-alto);
 }
 
@@ -352,28 +357,30 @@ section p {
 }
 
 .excursiones-grid {
-  width: min(100%, 1240px);
+  width: min(100%, 1550px);
   grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: clamp(18px, 2vw, 28px);
+  gap: clamp(16px, 1.7vw, 24px);
   justify-content: center;
   align-items: stretch;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
+  margin-top: clamp(14px, 2svh, 20px);
 }
 
 .excursion-card {
   background: #082742;
   border-color: rgba(6, 27, 51, 0.12);
   box-shadow: 0 14px 34px rgba(6, 27, 51, 0.12);
-  height: 100%;
+  height: min(64svh, 620px);
+  min-height: 430px;
 }
 
 .excursion-imagen {
   width: 100%;
+  height: 100%;
   display: block;
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: top center;
   background: #082742;
 }
 
@@ -1399,6 +1406,10 @@ nav a:hover {
   background: transparent;
 }
 
+.categoria-productos-page .productos-grid {
+  justify-content: start;
+}
+
 .categoria-productos-page .producto-card {
   background: #ffffff;
   border: 1px solid #dce5ec;
@@ -1415,6 +1426,98 @@ nav a:hover {
 
 .categoria-productos-page .producto-card h4 {
   color: #082742;
+}
+
+.producto-detalle-page {
+  min-height: calc(100svh - var(--header-alto));
+  padding: 42px clamp(18px, 5vw, 56px) 56px;
+  background: #ffffff;
+  color: #102033;
+}
+
+.producto-detalle-layout {
+  width: min(1180px, 100%);
+  margin: 28px auto 0;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(280px, 1fr);
+  gap: clamp(24px, 4vw, 44px);
+  align-items: start;
+}
+
+.producto-detalle-galeria {
+  display: grid;
+  gap: 12px;
+}
+
+.producto-detalle-imagen {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid #dce5ec;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #ffffff;
+  box-shadow: 0 18px 44px rgba(6, 27, 51, 0.1);
+}
+
+.producto-detalle-thumbs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.producto-detalle-thumbs button {
+  min-height: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.producto-detalle-thumbs button.activo {
+  border-color: var(--lima);
+}
+
+.producto-detalle-thumbs img {
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  object-fit: cover;
+}
+
+.producto-detalle-info h2 {
+  color: #102033;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 4vw, 58px);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.producto-detalle-info h2::after {
+  display: none;
+}
+
+.producto-detalle-marca {
+  margin-bottom: 18px;
+  color: #0b67ac;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.producto-detalle-info h3 {
+  margin-bottom: 18px;
+  color: #082742;
+  font-size: 30px;
+}
+
+.producto-detalle-descripcion {
+  white-space: pre-line;
+  color: #465968;
+}
+
+.producto-detalle-info button {
+  width: min(100%, 360px);
+  margin-top: 8px;
 }
 
 .admin-page {
@@ -1671,6 +1774,38 @@ nav a:hover {
   background: #ffffff;
 }
 
+.admin-filters {
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #dce5ec;
+  border-radius: 8px;
+  background: #ffffff;
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) 220px 220px;
+  gap: 12px;
+  align-items: end;
+}
+
+.admin-filters label {
+  display: grid;
+  gap: 7px;
+  color: #102033;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.admin-filters input,
+.admin-filters select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #cbd8e1;
+  border-radius: 8px;
+  padding: 0 11px;
+  color: #102033;
+  background: #ffffff;
+  font: inherit;
+}
+
 .admin-product-form h3 {
   margin-bottom: 16px;
   color: #082742;
@@ -1690,6 +1825,10 @@ nav a:hover {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin-bottom: 16px;
+}
+
+.admin-form-grid-compact {
+  grid-template-columns: minmax(260px, 1fr) 160px;
 }
 
 .admin-product-form input,
@@ -1823,6 +1962,17 @@ nav a:hover {
   gap: 8px;
 }
 
+.admin-trash-groups {
+  display: grid;
+  gap: 28px;
+}
+
+.admin-trash-groups h3 {
+  margin-bottom: 12px;
+  color: #082742;
+  font-size: 22px;
+}
+
 .admin-danger-btn {
   background: #ffe8e6;
   color: #a92518;
@@ -1830,6 +1980,15 @@ nav a:hover {
 
 .admin-danger-btn:hover {
   background: #ffd3cf;
+}
+
+.admin-state-btn {
+  background: #d9ecfb;
+  color: #082742;
+}
+
+.admin-state-btn:hover {
+  background: #c8e1f4;
 }
 
 @media (max-width: 1180px) {
@@ -1873,6 +2032,12 @@ nav a:hover {
 
   header h1 {
     font-size: clamp(27px, 4vw, 38px);
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-filters {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2085,12 +2250,20 @@ nav a:hover {
     aspect-ratio: 4 / 5;
   }
 
-  .productos-grid,
+  .productos-grid {
+    grid-template-columns: minmax(0, min(300px, calc(100vw - 40px)));
+    justify-content: center;
+  }
+
   .excursiones-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(280px, 520px);
   }
 
   .producto-imagen {
-    height: clamp(190px, 58vw, 260px);
+    height: auto;
+  }
+
+  .producto-detalle-layout {
+    grid-template-columns: 1fr;
   }
 }

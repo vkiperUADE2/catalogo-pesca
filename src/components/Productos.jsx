@@ -4,7 +4,8 @@ function Productos({
   productos,
   agregarAlCarrito,
   titulo = 'Productos destacados',
-  vacio = 'No encontramos productos con esa busqueda.'
+  vacio = 'No encontramos productos con esa busqueda.',
+  verProducto
 }) {
   const formatoPrecio = new Intl.NumberFormat('es-AR')
   const [productoAgregadoId, setProductoAgregadoId] = useState(null)
@@ -33,28 +34,42 @@ function Productos({
       ) : (
         <div className="productos-grid">
           {productos.map((producto) => (
-            <div className="producto-card" key={producto.id}>
-              <img
-                className="producto-imagen"
-                src={producto.imagen}
-                alt={producto.nombre}
-              />
+            <article
+              className="producto-card"
+              key={producto.id}
+              onClick={() => verProducto?.(producto)}
+            >
+              {producto.imagen ? (
+                <img
+                  className="producto-imagen"
+                  src={producto.imagen}
+                  alt={producto.nombre}
+                />
+              ) : (
+                <div className="producto-imagen producto-imagen-placeholder" />
+              )}
 
               <h3>{producto.nombre}</h3>
 
-              <p>{producto.categoria}</p>
+              <p>
+                {producto.categoria}
+                {producto.subcategoriaNombre ? ` > ${producto.subcategoriaNombre}` : ''}
+              </p>
 
               <h4>${formatoPrecio.format(producto.precio)}</h4>
 
               <button
                 className={productoAgregadoId === producto.id ? 'producto-agregado-btn' : ''}
-                onClick={() => manejarAgregar(producto)}
+                onClick={(event) => {
+                  event.stopPropagation()
+                  manejarAgregar(producto)
+                }}
               >
                 {productoAgregadoId === producto.id
                   ? 'Agregado correctamente'
                   : 'Agregar al carrito'}
               </button>
-            </div>
+            </article>
           ))}
         </div>
       )}
