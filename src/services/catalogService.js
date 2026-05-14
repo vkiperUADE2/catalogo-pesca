@@ -3,6 +3,8 @@ import { supabase } from '../lib/supabase'
 const BUCKET_IMAGENES = 'catalogo-imagenes'
 
 export async function obtenerCategorias() {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('categories')
     .select('*')
@@ -14,6 +16,8 @@ export async function obtenerCategorias() {
 }
 
 export async function obtenerSubcategorias() {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('subcategories')
     .select(`
@@ -28,6 +32,8 @@ export async function obtenerSubcategorias() {
 }
 
 export async function obtenerProductos() {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('products')
     .select(`
@@ -49,6 +55,8 @@ export async function obtenerProductos() {
 }
 
 export async function obtenerProductosAdmin() {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('products')
     .select(`
@@ -71,6 +79,8 @@ export async function obtenerProductosAdmin() {
 }
 
 export async function obtenerProductosEliminadosAdmin() {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('products')
     .select(`
@@ -93,6 +103,8 @@ export async function obtenerProductosEliminadosAdmin() {
 }
 
 export async function crearProducto(producto) {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('products')
     .insert(producto)
@@ -104,6 +116,8 @@ export async function crearProducto(producto) {
 }
 
 export async function actualizarProducto(id, producto) {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('products')
     .update(producto)
@@ -116,6 +130,8 @@ export async function actualizarProducto(id, producto) {
 }
 
 export async function eliminarProductoDefinitivo(id) {
+  asegurarSupabaseConfigurado()
+
   const { error } = await supabase
     .from('products')
     .delete()
@@ -125,6 +141,8 @@ export async function eliminarProductoDefinitivo(id) {
 }
 
 export async function subirImagenProducto(productId, archivo, sortOrder) {
+  asegurarSupabaseConfigurado()
+
   const imagenOptimizada = await optimizarImagen(archivo)
   const nombreArchivo = `${crypto.randomUUID()}.jpg`
   const storagePath = `productos/${productId}/${nombreArchivo}`
@@ -205,6 +223,8 @@ function cargarImagen(archivo) {
 }
 
 export async function eliminarImagenProducto(imagen) {
+  asegurarSupabaseConfigurado()
+
   if (imagen.storage_path) {
     const { error: storageError } = await supabase.storage
       .from(BUCKET_IMAGENES)
@@ -221,7 +241,15 @@ export async function eliminarImagenProducto(imagen) {
   if (error) throw error
 }
 
+function asegurarSupabaseConfigurado() {
+  if (!supabase) {
+    throw new Error('Supabase no esta configurado.')
+  }
+}
+
 export async function obtenerProductoPorSlug(slug) {
+  asegurarSupabaseConfigurado()
+
   const { data, error } = await supabase
     .from('products')
     .select(`
