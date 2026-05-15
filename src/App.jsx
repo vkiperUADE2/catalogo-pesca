@@ -7,8 +7,11 @@ import Carrito from './components/Carrito'
 import Contacto from './components/Contacto'
 import Admin from './components/Admin'
 import bannerLocal from './assets/banner-local.png'
+import bannerLocalMobile from './assets/banner-local-mobile.png'
 import segundoBanner from './assets/segundo-banner.png'
+import segundoBannerMobile from './assets/segundo-banner-mobile.png'
 import tercerBanner from './assets/tercer-banner.png'
+import tercerBannerMobile from './assets/tercer-banner-mobile.png'
 import categoriaCanas from './assets/categoria-canas.jpg'
 import categoriaReels from './assets/categoria-reels.jpg'
 import categoriaBoyasLineas from './assets/categoria-boyas-lieneas.jpg'
@@ -104,6 +107,7 @@ const banners = [
     boton: 'Ver cat\u00e1logo',
     href: '#catalogo',
     imagen: bannerLocal,
+    imagenMobile: bannerLocalMobile,
     posicion: 'center'
   },
   {
@@ -113,10 +117,12 @@ const banners = [
     boton: 'Ver excursiones',
     href: '#excursiones',
     imagen: segundoBanner,
+    imagenMobile: segundoBannerMobile,
     posicion: 'center'
   },
   {
     imagen: tercerBanner,
+    imagenMobile: tercerBannerMobile,
     posicion: 'center',
     mostrarTexto: false
   }
@@ -688,7 +694,8 @@ function App() {
                   style={
                     banner.imagen
                       ? {
-                          backgroundImage: `url(${banner.imagen})`,
+                          '--hero-imagen': `url(${banner.imagen})`,
+                          '--hero-imagen-mobile': `url(${banner.imagenMobile || banner.imagen})`,
                           backgroundPosition: banner.posicion || 'center'
                         }
                       : undefined

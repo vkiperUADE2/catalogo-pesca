@@ -1275,6 +1275,7 @@ nav a:hover {
   position: absolute;
   inset: 0;
   background:
+    var(--hero-imagen),
     linear-gradient(135deg, rgba(10, 102, 160, 0.95), rgba(6, 27, 51, 0.9)),
     radial-gradient(circle at 75% 22%, rgba(215, 232, 79, 0.28), transparent 24%);
   background-size: cover;
@@ -2917,12 +2918,20 @@ video {
 
   .hero-section,
   .hero-overlay {
-    min-height: clamp(390px, 58svh, 470px);
+    min-height: clamp(370px, 59.72vw, 430px);
   }
 
   .hero-section-sin-texto,
   .hero-section-sin-texto .hero-overlay {
-    min-height: clamp(390px, 58svh, 470px);
+    min-height: clamp(370px, 59.72vw, 430px);
+  }
+
+  .hero-slide {
+    background-image:
+      var(--hero-imagen-mobile),
+      linear-gradient(135deg, rgba(10, 102, 160, 0.95), rgba(6, 27, 51, 0.9));
+    background-size: cover;
+    background-position: center;
   }
 
   .hero-section-sin-texto .hero-slide {
@@ -3065,12 +3074,12 @@ video {
 
   .hero-section,
   .hero-overlay {
-    min-height: clamp(370px, 56svh, 440px);
+    min-height: clamp(360px, 59.72vw, 430px);
   }
 
   .hero-section-sin-texto,
   .hero-section-sin-texto .hero-overlay {
-    min-height: clamp(370px, 56svh, 440px);
+    min-height: clamp(360px, 59.72vw, 430px);
   }
 
   .hero-controls {
