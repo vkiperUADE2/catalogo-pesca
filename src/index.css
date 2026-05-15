@@ -2918,12 +2918,12 @@ video {
 
   .hero-section,
   .hero-overlay {
-    min-height: clamp(370px, 59.72vw, 430px);
+    min-height: clamp(320px, 94.44vw, 430px);
   }
 
   .hero-section-sin-texto,
   .hero-section-sin-texto .hero-overlay {
-    min-height: clamp(370px, 59.72vw, 430px);
+    min-height: clamp(320px, 94.44vw, 430px);
   }
 
   .hero-slide {
@@ -2944,6 +2944,30 @@ video {
     align-items: flex-end;
     background:
       linear-gradient(0deg, rgba(5, 22, 37, 0.2), rgba(5, 22, 37, 0.02) 58%, rgba(5, 22, 37, 0.12));
+  }
+
+  .hero-content {
+    width: min(440px, 86vw);
+    padding: 14px 0 14px 16px;
+  }
+
+  .hero-kicker {
+    margin-bottom: 8px;
+    font-size: 11px;
+  }
+
+  .hero-content h2 {
+    max-width: 390px;
+    font-size: clamp(30px, 8.2vw, 42px);
+    line-height: 1.02;
+    margin-bottom: 10px;
+  }
+
+  .hero-content p {
+    max-width: 390px;
+    font-size: clamp(15px, 4vw, 18px);
+    line-height: 1.35;
+    margin-bottom: 16px;
   }
 
   .productos-section {
@@ -3074,12 +3098,25 @@ video {
 
   .hero-section,
   .hero-overlay {
-    min-height: clamp(360px, 59.72vw, 430px);
+    min-height: clamp(320px, 94.44vw, 430px);
   }
 
   .hero-section-sin-texto,
   .hero-section-sin-texto .hero-overlay {
-    min-height: clamp(360px, 59.72vw, 430px);
+    min-height: clamp(320px, 94.44vw, 430px);
+  }
+
+  .hero-content {
+    width: min(380px, 88vw);
+    padding-left: 14px;
+  }
+
+  .hero-content h2 {
+    font-size: clamp(28px, 8.2vw, 38px);
+  }
+
+  .hero-content p {
+    font-size: clamp(14px, 4vw, 17px);
   }
 
   .hero-controls {
