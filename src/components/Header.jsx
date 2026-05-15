@@ -1,4 +1,5 @@
 import logo from '../assets/logo.png'
+import { useState } from 'react'
 
 function Header({
   abrirCarrito,
@@ -14,6 +15,7 @@ function Header({
   seleccionarResultadoBusqueda
 }) {
   const mostrarResultados = busqueda.trim().length >= 2
+  const [catalogoAbierto, setCatalogoAbierto] = useState(false)
 
   function manejarBuscar(event) {
     event.preventDefault()
@@ -86,8 +88,22 @@ function Header({
             <a href="/#inicio" onClick={(event) => navegarASeccion(event, 'inicio')}>
               Inicio
             </a>
-            <div className="catalogo-menu-wrap">
-              <a href="/#catalogo" onClick={(event) => navegarASeccion(event, 'catalogo')}>
+            <div
+              className={
+                catalogoAbierto
+                  ? 'catalogo-menu-wrap catalogo-menu-abierto'
+                  : 'catalogo-menu-wrap'
+              }
+              onMouseEnter={() => setCatalogoAbierto(true)}
+              onMouseLeave={() => setCatalogoAbierto(false)}
+            >
+              <a
+                href="/#catalogo"
+                onClick={(event) => {
+                  setCatalogoAbierto(false)
+                  navegarASeccion(event, 'catalogo')
+                }}
+              >
                 {'Cat\u00e1logo'}
               </a>
 
@@ -98,7 +114,10 @@ function Header({
                       <a
                         className="mega-menu-title"
                         href={`/${categoria.slug}`}
-                        onClick={(event) => seleccionarCategoria(event, categoria.slug)}
+                        onClick={(event) => {
+                          setCatalogoAbierto(false)
+                          seleccionarCategoria(event, categoria.slug)
+                        }}
                       >
                         {categoria.nombre}
                       </a>
@@ -108,13 +127,14 @@ function Header({
                           className="mega-menu-link"
                           href={`/${categoria.slug}/${subcategoria.slug}`}
                           key={subcategoria.slug}
-                          onClick={(event) =>
+                          onClick={(event) => {
+                            setCatalogoAbierto(false)
                             seleccionarSubcategoria(
                               event,
                               categoria.slug,
                               subcategoria.slug
                             )
-                          }
+                          }}
                         >
                           {subcategoria.nombre}
                         </a>

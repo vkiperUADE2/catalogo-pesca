@@ -1196,8 +1196,7 @@ nav a:hover {
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
 }
 
-.catalogo-menu-wrap:hover .mega-menu,
-.catalogo-menu-wrap:focus-within .mega-menu {
+.catalogo-menu-wrap.catalogo-menu-abierto .mega-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -2818,15 +2817,24 @@ video {
 }
 
 .productos-grid {
-  width: min(100%, 1500px);
+  --producto-card-ancho: 276px;
+  --producto-card-imagen-alto: 202px;
+  --producto-card-alto: 420px;
+  width: min(100%, 1760px);
   margin-left: auto;
   margin-right: auto;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: clamp(12px, 1vw, 16px);
+  grid-template-columns: repeat(auto-fill, var(--producto-card-ancho));
+  gap: 16px;
+  justify-content: center;
+  align-items: start;
 }
 
 .producto-card {
+  width: var(--producto-card-ancho);
+  height: var(--producto-card-alto);
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .producto-card h3,
@@ -2835,27 +2843,65 @@ video {
   overflow-wrap: anywhere;
 }
 
+.producto-card h3 {
+  min-height: 66px;
+  font-size: clamp(17px, 1vw, 19px);
+  line-height: 1.1;
+}
+
+.producto-card p {
+  min-height: 40px;
+  font-size: clamp(13px, 0.85vw, 15px);
+  line-height: 1.25;
+}
+
+.producto-card h4 {
+  margin-top: auto;
+}
+
+.producto-card button {
+  margin: 0 16px 14px;
+}
+
+.producto-imagen {
+  height: var(--producto-card-imagen-alto);
+  aspect-ratio: auto;
+  flex: 0 0 var(--producto-card-imagen-alto);
+  object-fit: cover;
+}
+
 .categoria-productos-page .productos-grid {
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, var(--producto-card-ancho));
+  justify-content: start;
 }
 
 .excursiones-grid {
   width: min(100%, 1380px);
-  grid-template-columns: repeat(auto-fit, minmax(320px, 430px));
+  grid-template-columns: repeat(auto-fill, 360px);
   justify-content: center;
   align-items: stretch;
 }
 
+.excursion-card {
+  width: 360px;
+}
+
 @media (max-width: 1180px) {
   .productos-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    --producto-card-ancho: 260px;
+    --producto-card-imagen-alto: 194px;
+    --producto-card-alto: 410px;
+    grid-template-columns: repeat(auto-fill, var(--producto-card-ancho));
   }
 
   .producto-card h3 {
-    font-size: 18px;
+    min-height: 62px;
+    font-size: 17px;
   }
 
   .producto-card p {
+    min-height: 38px;
     font-size: 14px;
   }
 
@@ -2898,21 +2944,30 @@ video {
 
   .productos-grid,
   .categoria-productos-page .productos-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --producto-card-ancho: min(220px, calc((100vw - 36px) / 2));
+    --producto-card-imagen-alto: var(--producto-card-ancho);
+    --producto-card-alto: calc(var(--producto-card-ancho) + 190px);
+    grid-template-columns: repeat(2, var(--producto-card-ancho));
     gap: clamp(10px, 3vw, 16px);
   }
 
   .excursiones-grid {
-    grid-template-columns: minmax(0, min(100%, 430px));
+    grid-template-columns: minmax(0, min(100%, 360px));
+  }
+
+  .excursion-card {
+    width: min(100%, 360px);
   }
 
   .producto-card h3 {
+    min-height: 52px;
     padding: 10px 10px 3px;
     font-size: clamp(14px, 4vw, 18px);
     line-height: 1.12;
   }
 
   .producto-card p {
+    min-height: 36px;
     padding: 0 10px;
     font-size: clamp(11px, 3.2vw, 14px);
     line-height: 1.25;
@@ -2932,7 +2987,9 @@ video {
   }
 
   .producto-imagen {
-    aspect-ratio: 1 / 1;
+    height: var(--producto-card-imagen-alto);
+    flex-basis: var(--producto-card-imagen-alto);
+    aspect-ratio: auto;
     object-fit: contain;
     background: #ffffff;
   }
@@ -3060,6 +3117,9 @@ video {
 
   .productos-grid,
   .categoria-productos-page .productos-grid {
+    --producto-card-ancho: min(205px, calc((100vw - 34px) / 2));
+    --producto-card-imagen-alto: var(--producto-card-ancho);
+    --producto-card-alto: calc(var(--producto-card-ancho) + 184px);
     gap: 10px;
   }
 
