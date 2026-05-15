@@ -2917,16 +2917,16 @@ video {
 
   .hero-section,
   .hero-overlay {
-    min-height: clamp(420px, 78svh, 620px);
+    min-height: clamp(390px, 58svh, 470px);
   }
 
   .hero-section-sin-texto,
   .hero-section-sin-texto .hero-overlay {
-    min-height: clamp(168px, 46.9vw, 340px);
+    min-height: clamp(390px, 58svh, 470px);
   }
 
   .hero-section-sin-texto .hero-slide {
-    background-size: contain;
+    background-size: cover;
     background-position: center;
   }
 
@@ -3065,12 +3065,12 @@ video {
 
   .hero-section,
   .hero-overlay {
-    min-height: clamp(380px, 72svh, 540px);
+    min-height: clamp(370px, 56svh, 440px);
   }
 
   .hero-section-sin-texto,
   .hero-section-sin-texto .hero-overlay {
-    min-height: clamp(170px, 46.9vw, 260px);
+    min-height: clamp(370px, 56svh, 440px);
   }
 
   .hero-controls {
