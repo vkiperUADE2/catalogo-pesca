@@ -342,7 +342,7 @@ function App() {
   useEffect(() => {
     const intervalo = setInterval(() => {
       setBannerActivo((bannerActual) => (bannerActual + 1) % banners.length)
-    }, 5200)
+    }, 8200)
 
     return () => clearInterval(intervalo)
   }, [])
@@ -674,7 +674,13 @@ function App() {
           </section>
         ) : (
           <>
-            <section className="hero-section">
+            <section
+              className={
+                banners[bannerActivo].mostrarTexto === false
+                  ? 'hero-section hero-section-sin-texto'
+                  : 'hero-section'
+              }
+            >
               {banners.map((banner, index) => (
                 <div
                   className={`hero-slide ${bannerActivo === index ? 'activo' : ''}`}
