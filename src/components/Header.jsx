@@ -9,8 +9,19 @@ function Header({
   categorias,
   subdivisionesCatalogo,
   seleccionarCategoria,
-  seleccionarSubcategoria
+  seleccionarSubcategoria,
+  resultadosBusqueda,
+  seleccionarResultadoBusqueda
 }) {
+  const mostrarResultados = busqueda.trim().length >= 2
+
+  function manejarBuscar(event) {
+    event.preventDefault()
+    if (resultadosBusqueda.length === 0) return
+
+    seleccionarResultadoBusqueda(resultadosBusqueda[0])
+  }
+
   return (
     <header>
       <div className="promo-carousel" aria-label="Promociones">
@@ -36,15 +47,40 @@ function Header({
 
       <div className="header-main">
         <div className="header-left">
-          <label className="search-box" aria-label="Buscar en la pagina">
-            <input
-              type="search"
-              placeholder={'\u00bfQu\u00e9 est\u00e1s buscando?'}
-              value={busqueda}
-              onChange={(event) => cambiarBusqueda(event.target.value)}
-            />
-            <span>Buscar</span>
-          </label>
+          <form className="search-wrap" onSubmit={manejarBuscar}>
+            <label className="search-box" aria-label="Buscar en la pagina">
+              <input
+                type="search"
+                placeholder={'\u00bfQu\u00e9 est\u00e1s buscando?'}
+                value={busqueda}
+                onChange={(event) => cambiarBusqueda(event.target.value)}
+              />
+              <button type="submit">Buscar</button>
+            </label>
+
+            {mostrarResultados && (
+              <div className="search-results">
+                {resultadosBusqueda.length === 0 ? (
+                  <span className="search-empty">Sin resultados</span>
+                ) : (
+                  resultadosBusqueda.map((resultado) => (
+                    <button
+                      type="button"
+                      className={`search-result search-result-${resultado.tipo}`}
+                      key={resultado.id}
+                      onMouseDown={(event) => {
+                        event.preventDefault()
+                        seleccionarResultadoBusqueda(resultado)
+                      }}
+                    >
+                      <strong>{resultado.titulo}</strong>
+                      <span>{resultado.detalle}</span>
+                    </button>
+                  ))
+                )}
+              </div>
+            )}
+          </form>
 
           <nav>
             <a href="/#inicio" onClick={(event) => navegarASeccion(event, 'inicio')}>

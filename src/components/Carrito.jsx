@@ -29,7 +29,7 @@ function Carrito({
 
   const mensaje = carrito
     .map((item) => (
-      `${item.nombre} x${item.cantidad} - $${formatoPrecio.format(item.precio * item.cantidad)}`
+      `${item.nombre}${item.color ? ` (${item.color})` : ''} x${item.cantidad} - $${formatoPrecio.format(item.precio * item.cantidad)}`
     ))
     .join('\n')
 
@@ -66,8 +66,11 @@ function Carrito({
         ) : (
           <div className="carrito-items">
             {carrito.map((producto) => (
-              <div className="carrito-item" key={producto.id}>
+              <div className="carrito-item" key={producto.cartItemId}>
                 <h4>{producto.nombre}</h4>
+                {producto.color && (
+                  <span className="carrito-color">Color: {producto.color}</span>
+                )}
 
                 <p>
                   ${formatoPrecio.format(producto.precio)} x {producto.cantidad}
@@ -78,19 +81,19 @@ function Carrito({
                 </h5>
 
                 <div className="carrito-controles">
-                  <button onClick={() => restarProducto(producto.id)}>
+                  <button onClick={() => restarProducto(producto.cartItemId)}>
                     -
                   </button>
 
                   <span>{producto.cantidad}</span>
 
-                  <button onClick={() => sumarProducto(producto.id)}>
+                  <button onClick={() => sumarProducto(producto.cartItemId)}>
                     +
                   </button>
 
                   <button
                     className="eliminar-btn"
-                    onClick={() => eliminarProducto(producto.id)}
+                    onClick={() => eliminarProducto(producto.cartItemId)}
                   >
                     Eliminar
                   </button>

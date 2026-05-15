@@ -1,29 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
-
 function Productos({
   productos,
-  agregarAlCarrito,
   titulo = 'Productos destacados',
   vacio = 'No encontramos productos con esa busqueda.',
   verProducto
 }) {
   const formatoPrecio = new Intl.NumberFormat('es-AR')
-  const [productoAgregadoId, setProductoAgregadoId] = useState(null)
-  const timerRef = useRef(null)
-
-  useEffect(() => {
-    return () => clearTimeout(timerRef.current)
-  }, [])
-
-  function manejarAgregar(producto) {
-    agregarAlCarrito(producto)
-    setProductoAgregadoId(producto.id)
-
-    clearTimeout(timerRef.current)
-    timerRef.current = setTimeout(() => {
-      setProductoAgregadoId(null)
-    }, 1500)
-  }
 
   return (
     <section className="productos-section" id="productos">
@@ -59,15 +40,12 @@ function Productos({
               <h4>${formatoPrecio.format(producto.precio)}</h4>
 
               <button
-                className={productoAgregadoId === producto.id ? 'producto-agregado-btn' : ''}
                 onClick={(event) => {
                   event.stopPropagation()
-                  manejarAgregar(producto)
+                  verProducto?.(producto)
                 }}
               >
-                {productoAgregadoId === producto.id
-                  ? 'Agregado correctamente'
-                  : 'Agregar al carrito'}
+                Ver producto
               </button>
             </article>
           ))}

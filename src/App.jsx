@@ -6,13 +6,9 @@ import Excursiones from './components/Excursiones'
 import Carrito from './components/Carrito'
 import Contacto from './components/Contacto'
 import Admin from './components/Admin'
-import hero from './assets/hero.jpg'
-import canaPejerrey from './assets/cana-pejerrey.jpg'
-import reelFrontalLiviano from './assets/reel-frontal-liviano.jpg'
-import lineaTresBoyas from './assets/linea-3-boyas.jpg'
-import excursionPejerrey from './assets/excursion-pejerrey.jpg'
-import pescaGuiada from './assets/pesca-guiada.jpg'
-import armaExcursion from './assets/arma-tu-excursion.jpg'
+import bannerLocal from './assets/banner-local.png'
+import segundoBanner from './assets/segundo-banner.png'
+import tercerBanner from './assets/tercer-banner.png'
 import categoriaCanas from './assets/categoria-canas.jpg'
 import categoriaReels from './assets/categoria-reels.jpg'
 import categoriaBoyasLineas from './assets/categoria-boyas-lieneas.jpg'
@@ -23,6 +19,8 @@ import categoriaNautica from './assets/catalogo-nautica.jpg'
 import categoriaAccesorios from './assets/catalogo-accesorios.jpg'
 import {
   obtenerCategorias,
+  obtenerExcursiones,
+  obtenerFiltrosCatalogo,
   obtenerProductos,
   obtenerSubcategorias
 } from './services/catalogService'
@@ -98,141 +96,33 @@ const subdivisionesCatalogo = {
   ]
 }
 
-const imagenesPorCategoria = {
-  Ca\u00f1as: canaPejerrey,
-  Reeles: reelFrontalLiviano,
-  'Boyas y L\u00edneas': lineaTresBoyas,
-  Se\u00f1uelos: categoriaSenuelos,
-  Camping: categoriaCamping,
-  Carnada: categoriaCarnada,
-  N\u00e1utica: categoriaNautica,
-  Accesorios: categoriaAccesorios
-}
-
-const productosPorCategoria = {
-  Ca\u00f1as: [
-    ['Ca\u00f1a pejerrey telesc\u00f3pica', 45000, 'pejerrey'],
-    ['Ca\u00f1a variada embarcada', 52000, 'embarcado'],
-    ['Ca\u00f1a baitcast carbono', 68000, 'baitcasting'],
-    ['Ca\u00f1a surfcasting 3.90 m', 79000, 'surfcasting'],
-    ['Ca\u00f1a spinning liviana', 41000, 'spinning']
-  ],
-  Reeles: [
-    ['Reel frontal liviano', 38000, 'frontal'],
-    ['Reel rotativo perfil bajo', 62000, 'rotativo'],
-    ['Reel baitcasting compacto', 62000, 'baitcasting'],
-    ['Reel pejerrey micro', 33000, 'pejerrey'],
-    ['Reel embarcado reforzado', 74000, 'embarcado']
-  ],
-  'Boyas y L\u00edneas': [
-    ['L\u00ednea pejerrey 3 boyas', 9500, 'pejerrey'],
-    ['Boyas chupetonas surtidas', 7200, 'boyas'],
-    ['L\u00ednea paternoster armada', 8800, 'paternoster'],
-    ['Boyas palito combinadas', 6900, 'boyas'],
-    ['L\u00ednea variada laguna', 8300, 'variada']
-  ],
-  Se\u00f1uelos: [
-    ['Se\u00f1uelo minnow floating', 12500, 'baitcast'],
-    ['Cuchara ondulante plateada', 6800, 'cucharas-spinners'],
-    ['Spinner dorado mediano', 7400, 'cucharas-spinners'],
-    ['Se\u00f1uelo tararira superficie', 11800, 'tararira'],
-    ['Se\u00f1uelo trolling profundo', 15600, 'trolling']
-  ],
-  Camping: [
-    ['Silla plegable reforzada', 36000, 'sillas'],
-    ['Conservadora 24 litros', 58000, 'conservadoras'],
-    ['Linterna led recargable', 19000, 'linternas'],
-    ['Mesa plegable compacta', 42000, 'mesas'],
-    ['Bolso termico outdoor', 31000, 'bolsos-termicos']
-  ],
-  Carnada: [
-    ['Mojarra seleccionada', 6500, 'mojarras'],
-    ['Lombriz californiana', 4200, 'lombrices'],
-    ['Filet preparado para variada', 5900, 'filet'],
-    ['Masa saborizada', 3600, 'masas'],
-    ['Carnada artificial soft', 7800, 'artificial']
-  ],
-  N\u00e1utica: [
-    ['Chaleco salvavidas adulto', 49000, 'chalecos'],
-    ['Ancla plegable chica', 28000, 'anclas'],
-    ['Cabo nautico 10 metros', 14500, 'cabos'],
-    ['Balde achicador reforzado', 9800, 'embarcacion'],
-    ['Kit seguridad embarcado', 67000, 'seguridad']
-  ],
-  Accesorios: [
-    ['Caja organizadora doble', 22000, 'cajas'],
-    ['Pinza multifuncion pesca', 15500, 'pinzas-tijeras'],
-    ['Plomadas surtidas', 5200, 'plomadas'],
-    ['Anzuelos reforzados pack', 4300, 'anzuelos'],
-    ['Mosquetones con esmerillon', 3900, 'mosquetones']
-  ]
-}
-
-const productos = categoriasIniciales.flatMap((categoria, categoriaIndex) =>
-  productosPorCategoria[categoria.nombre].map(([nombre, precio, subcategoria], productoIndex) => ({
-    id: categoriaIndex * 100 + productoIndex + 1,
-    nombre,
-    categoria: categoria.nombre,
-    categoriaSlug: categoria.slug,
-    subcategoria,
-    precio,
-    imagen: imagenesPorCategoria[categoria.nombre]
-  }))
-)
-
-const productosDestacados = [
-  productos[0],
-  productos[5],
-  productos[10]
-]
-
-const excursiones = [
-  {
-    id: 1,
-    titulo: 'Excursi\u00f3n de pejerrey',
-    descripcion: 'Salidas de pesca embarcada para temporada de pejerrey.',
-    imagen: excursionPejerrey
-  },
-  {
-    id: 2,
-    titulo: 'Salida de pesca guiada',
-    descripcion: 'Consult\u00e1 fechas disponibles, horarios y condiciones.',
-    imagen: pescaGuiada
-  },
-  {
-    id: 3,
-    titulo: 'Arm\u00e1 tu excursi\u00f3n',
-    descripcion: 'Coordinamos una salida a medida para tu grupo.',
-    imagen: armaExcursion
-  }
-]
-
 const banners = [
   {
     etiqueta: 'Casa de Pesca Pierre Bandenay',
-    titulo: 'Todo para tu pr\u00f3xima jornada de pesca',
-    texto: 'Art\u00edculos de pesca, accesorios, camping e indumentaria para preparar la salida con confianza.',
+    titulo: 'Atencion de local, confianza de siempre',
+    texto: 'Equipate con asesoramiento real y productos elegidos para pescar mejor.',
     boton: 'Ver cat\u00e1logo',
     href: '#catalogo',
-    imagen: hero
+    imagen: bannerLocal,
+    posicion: 'center'
   },
   {
-    etiqueta: 'Beneficios',
-    titulo: 'Compr\u00e1 mejor en el local',
-    texto: 'Env\u00edo gratis desde $100.000, 3 cuotas sin inter\u00e9s desde $100.000 y 10% OFF abonando en efectivo o transferencia.',
-    boton: 'Consultar promos',
-    href: '#contacto'
+    etiqueta: 'Excursiones',
+    titulo: 'Salidas guiadas para vivir la pesca de verdad',
+    texto: 'Experiencias organizadas con gente del local, buena pesca y todo listo para disfrutar.',
+    boton: 'Ver excursiones',
+    href: '#excursiones',
+    imagen: segundoBanner,
+    posicion: 'center'
   },
   {
-    etiqueta: 'Pr\u00f3ximo banner',
-    titulo: 'Espacio listo para imagen',
-    texto: 'Cuando tengas la foto del cliente, la cargamos en src/assets y la conectamos ac\u00e1.',
-    boton: 'Contactar',
-    href: '#contacto'
+    imagen: tercerBanner,
+    posicion: 'center',
+    mostrarTexto: false
   }
 ]
 
-const telefonoWhatsApp = '5491178929344'
+const telefonoWhatsApp = '5491133870116'
 
 function adaptarCategoria(categoria) {
   const categoriaInicial = categoriasIniciales.find(
@@ -266,8 +156,35 @@ function adaptarProducto(producto) {
     destacado: producto.is_featured,
     imagen: imagenPrincipal,
     imagenes: producto.images || [],
+    colores: obtenerColoresProducto(producto),
+    filterIds: producto.filter_ids || [],
     slug: producto.slug,
     creado: producto.created_at
+  }
+}
+
+function adaptarFiltro(filtro) {
+  return {
+    id: filtro.id,
+    nombre: filtro.name,
+    slug: filtro.slug,
+    categoriaId: filtro.category_id,
+    subcategoriaIds: filtro.subcategory_ids || []
+  }
+}
+
+function adaptarExcursion(excursion) {
+  return {
+    id: excursion.id,
+    titulo: excursion.title,
+    precio: excursion.price,
+    descripcion: excursion.description,
+    lugarSalida: excursion.departure_place,
+    lugarExcursion: excursion.destination_place || '',
+    duracion: excursion.duration,
+    imagen: excursion.images?.[0]?.image_url,
+    imagenes: excursion.images || [],
+    slug: excursion.slug
   }
 }
 
@@ -315,20 +232,37 @@ function App() {
   const [categoriasCatalogo, setCategoriasCatalogo] = useState(categoriasIniciales)
   const [subdivisionesCatalogoActuales, setSubdivisionesCatalogoActuales] = useState(subdivisionesCatalogo)
   const [productosCatalogo, setProductosCatalogo] = useState([])
+  const [excursionesCatalogo, setExcursionesCatalogo] = useState([])
+  const [ordenProductosCategoria, setOrdenProductosCategoria] = useState('recientes')
+  const [filtrosCatalogo, setFiltrosCatalogo] = useState([])
+  const [filtrosCategoriaSeleccionados, setFiltrosCategoriaSeleccionados] = useState([])
 
   const [categoriaRuta, subcategoriaRuta] = rutaActual.split('/')
   const esRutaProducto = categoriaRuta === 'producto'
+  const esRutaExcursion = categoriaRuta === 'excursion'
   const productoDetalle = esRutaProducto
     ? productosCatalogo.find((producto) => producto.slug === subcategoriaRuta)
     : null
+  const excursionDetalle = esRutaExcursion
+    ? excursionesCatalogo.find((excursion) => excursion.slug === subcategoriaRuta)
+    : null
   const categoriaActiva = categoriasCatalogo.find(
-    (categoria) => !esRutaProducto && categoria.slug === categoriaRuta
+    (categoria) =>
+      !esRutaProducto && !esRutaExcursion && categoria.slug === categoriaRuta
   )
   const subcategoriaActiva = categoriaActiva
     ? subdivisionesCatalogoActuales[categoriaActiva.slug]?.find(
         (subcategoria) => subcategoria.slug === subcategoriaRuta
       )
     : null
+  const subcategoriasCategoriaActiva = categoriaActiva
+    ? subdivisionesCatalogoActuales[categoriaActiva.slug] || []
+    : []
+  const filtrosSubcategoriaActiva = subcategoriaActiva
+    ? filtrosCatalogo.filter((filtro) =>
+        filtro.subcategoriaIds.includes(subcategoriaActiva.id)
+      )
+    : []
 
   const cantidadCarrito = carrito.reduce(
     (acc, producto) => acc + producto.cantidad,
@@ -362,23 +296,48 @@ function App() {
       })
     : []
 
-  const productosCategoriaFiltrados = busquedaNormalizada
+  const productosCategoriaConFiltros = filtrosCategoriaSeleccionados.length > 0
     ? productosCategoria.filter((producto) =>
+        filtrosCategoriaSeleccionados.some((filterId) =>
+          producto.filterIds.includes(filterId)
+        )
+      )
+    : productosCategoria
+
+  const productosCategoriaBuscados = busquedaNormalizada
+    ? productosCategoriaConFiltros.filter((producto) =>
         [producto.nombre, producto.categoria]
           .join(' ')
           .toLowerCase()
           .includes(busquedaNormalizada)
       )
-    : productosCategoria
+    : productosCategoriaConFiltros
+  const productosCategoriaFiltrados = ordenarProductosCategoria(
+    productosCategoriaBuscados,
+    ordenProductosCategoria
+  )
 
   const excursionesFiltradas = busquedaNormalizada
-    ? excursiones.filter((excursion) =>
-        [excursion.titulo, excursion.descripcion]
+    ? excursionesCatalogo.filter((excursion) =>
+        [
+          excursion.titulo,
+          excursion.descripcion,
+          excursion.lugarSalida,
+          excursion.lugarExcursion,
+          excursion.duracion
+        ]
           .join(' ')
           .toLowerCase()
           .includes(busquedaNormalizada)
       )
-    : excursiones
+    : excursionesCatalogo
+  const resultadosBusqueda = obtenerResultadosBusqueda({
+    busqueda,
+    categorias: categoriasCatalogo,
+    subdivisionesCatalogo: subdivisionesCatalogoActuales,
+    productos: productosCatalogo,
+    excursiones: excursionesCatalogo
+  })
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -438,6 +397,32 @@ function App() {
     cargarProductos()
   }, [])
 
+  useEffect(() => {
+    async function cargarExcursiones() {
+      try {
+        const excursionesSupabase = await obtenerExcursiones()
+        setExcursionesCatalogo(excursionesSupabase.map(adaptarExcursion))
+      } catch (error) {
+        console.error('No se pudieron cargar las excursiones.', error)
+      }
+    }
+
+    cargarExcursiones()
+  }, [])
+
+  useEffect(() => {
+    async function cargarFiltros() {
+      try {
+        const filtrosSupabase = await obtenerFiltrosCatalogo()
+        setFiltrosCatalogo(filtrosSupabase.map(adaptarFiltro))
+      } catch (error) {
+        console.error('No se pudieron cargar los filtros.', error)
+      }
+    }
+
+    cargarFiltros()
+  }, [])
+
   function navegarA(ruta) {
     window.history.pushState({}, '', ruta)
     setRutaActual(obtenerRutaActual())
@@ -447,23 +432,11 @@ function App() {
   function seleccionarCategoria(event, slug) {
     event.preventDefault()
     setBusqueda('')
+    setFiltrosCategoriaSeleccionados([])
     navegarA(`/${slug}`)
   }
 
-  function seleccionarSubcategoria(event, categoriaSlug, subcategoriaSlug) {
-    event.preventDefault()
-    setBusqueda('')
-    navegarA(`/${categoriaSlug}/${subcategoriaSlug}`)
-  }
-
-  function verProducto(producto) {
-    if (!producto.slug) return
-    navegarA(`/producto/${producto.slug}`)
-  }
-
-  function navegarASeccion(event, seccion) {
-    event.preventDefault()
-    setBusqueda('')
+  function irASeccion(seccion) {
     window.history.pushState({}, '', `/#${seccion}`)
     setRutaActual('')
 
@@ -481,6 +454,73 @@ function App() {
     }, 0)
   }
 
+  function seleccionarSubcategoria(event, categoriaSlug, subcategoriaSlug) {
+    event.preventDefault()
+    setBusqueda('')
+    setFiltrosCategoriaSeleccionados([])
+    navegarA(`/${categoriaSlug}/${subcategoriaSlug}`)
+  }
+
+  function seleccionarSubcategoriaFiltro(slug) {
+    setBusqueda('')
+    setFiltrosCategoriaSeleccionados([])
+
+    if (!categoriaActiva) return
+    navegarA(slug ? `/${categoriaActiva.slug}/${slug}` : `/${categoriaActiva.slug}`)
+  }
+
+  function alternarFiltroCategoria(filterId) {
+    setFiltrosCategoriaSeleccionados((filtrosActuales) =>
+      filtrosActuales.includes(filterId)
+        ? filtrosActuales.filter((id) => id !== filterId)
+        : [...filtrosActuales, filterId]
+    )
+  }
+
+  function verProducto(producto) {
+    if (!producto.slug) return
+    navegarA(`/producto/${producto.slug}`)
+  }
+
+  function verExcursion(excursion) {
+    if (!excursion.slug) return
+    navegarA(`/excursion/${excursion.slug}`)
+  }
+
+  function navegarASeccion(event, seccion) {
+    event.preventDefault()
+    setBusqueda('')
+    irASeccion(seccion)
+  }
+
+  function seleccionarResultadoBusqueda(resultado) {
+    setBusqueda('')
+
+    if (resultado.tipo === 'seccion') {
+      irASeccion(resultado.seccion)
+      return
+    }
+
+    if (resultado.tipo === 'categoria') {
+      navegarA(`/${resultado.slug}`)
+      return
+    }
+
+    if (resultado.tipo === 'subcategoria') {
+      navegarA(`/${resultado.categoriaSlug}/${resultado.slug}`)
+      return
+    }
+
+    if (resultado.tipo === 'producto') {
+      verProducto(resultado.item)
+      return
+    }
+
+    if (resultado.tipo === 'excursion') {
+      verExcursion(resultado.item)
+    }
+  }
+
   function cambiarBanner(direccion) {
     setBannerActivo((bannerActual) => {
       const siguiente = bannerActual + direccion
@@ -490,42 +530,53 @@ function App() {
     })
   }
 
-  function agregarAlCarrito(producto) {
-    const productoExistente = carrito.find((item) => item.id === producto.id)
+  function agregarAlCarrito(producto, colorElegido = '', cantidadElegida = 1) {
+    const color = String(colorElegido).trim()
+    const cantidad = Math.max(Number(cantidadElegida) || 1, 1)
+
+    if (producto.colores?.length > 0 && !color) {
+      window.alert('Elegi un color antes de agregar este producto al carrito.')
+      return false
+    }
+
+    const cartItemId = `${producto.id}-${color || 'sin-color'}`
+    const productoExistente = carrito.find((item) => item.cartItemId === cartItemId)
 
     if (productoExistente) {
       const carritoActualizado = carrito.map((item) =>
-        item.id === producto.id
-          ? { ...item, cantidad: item.cantidad + 1 }
+        item.cartItemId === cartItemId
+          ? { ...item, cantidad: item.cantidad + cantidad }
           : item
       )
 
       setCarrito(carritoActualizado)
     } else {
-      setCarrito([...carrito, { ...producto, cantidad: 1 }])
+      setCarrito([...carrito, { ...producto, cartItemId, color, cantidad }])
     }
+
+    return true
   }
 
-  function sumarProducto(id) {
+  function sumarProducto(cartItemId) {
     const carritoActualizado = carrito.map((item) =>
-      item.id === id ? { ...item, cantidad: item.cantidad + 1 } : item
+      item.cartItemId === cartItemId ? { ...item, cantidad: item.cantidad + 1 } : item
     )
 
     setCarrito(carritoActualizado)
   }
 
-  function restarProducto(id) {
+  function restarProducto(cartItemId) {
     const carritoActualizado = carrito
       .map((item) =>
-        item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
+        item.cartItemId === cartItemId ? { ...item, cantidad: item.cantidad - 1 } : item
       )
       .filter((item) => item.cantidad > 0)
 
     setCarrito(carritoActualizado)
   }
 
-  function eliminarProducto(id) {
-    const carritoActualizado = carrito.filter((item) => item.id !== id)
+  function eliminarProducto(cartItemId) {
+    const carritoActualizado = carrito.filter((item) => item.cartItemId !== cartItemId)
 
     setCarrito(carritoActualizado)
   }
@@ -546,6 +597,8 @@ function App() {
         subdivisionesCatalogo={subdivisionesCatalogoActuales}
         seleccionarCategoria={seleccionarCategoria}
         seleccionarSubcategoria={seleccionarSubcategoria}
+        resultadosBusqueda={resultadosBusqueda}
+        seleccionarResultadoBusqueda={seleccionarResultadoBusqueda}
       />
 
       <Carrito
@@ -560,7 +613,7 @@ function App() {
 
       <a
         className="whatsapp-flotante"
-        href="https://wa.me/1178929344"
+        href={`https://wa.me/${telefonoWhatsApp}`}
         target="_blank"
         rel="noreferrer"
         aria-label="Consultar por WhatsApp"
@@ -571,9 +624,17 @@ function App() {
       <main id="inicio">
         {esRutaProducto ? (
           <ProductoDetalle
+            key={productoDetalle?.id || subcategoriaRuta || 'producto'}
             producto={productoDetalle}
             volver={() => navegarA('/')}
             agregarAlCarrito={agregarAlCarrito}
+          />
+        ) : esRutaExcursion ? (
+          <ExcursionDetalle
+            key={excursionDetalle?.id || subcategoriaRuta || 'excursion'}
+            excursion={excursionDetalle}
+            volver={() => navegarA('/')}
+            telefono={telefonoWhatsApp}
           />
         ) : categoriaActiva ? (
           <section className="categoria-productos-page">
@@ -589,13 +650,27 @@ function App() {
               <h2>{subcategoriaActiva?.nombre || categoriaActiva.nombre}</h2>
             </div>
 
-            <Productos
-              productos={productosCategoriaFiltrados}
-              agregarAlCarrito={agregarAlCarrito}
-              verProducto={verProducto}
-              titulo=""
-              vacio="No encontramos productos en esta categoria."
-            />
+            <div className="categoria-page-layout">
+              <FiltrosCategoria
+                categoria={categoriaActiva}
+                subcategorias={subcategoriasCategoriaActiva}
+                subcategoriaActiva={subcategoriaActiva}
+                filtros={filtrosSubcategoriaActiva}
+                filtrosSeleccionados={filtrosCategoriaSeleccionados}
+                orden={ordenProductosCategoria}
+                cambiarOrden={setOrdenProductosCategoria}
+                seleccionarSubcategoria={seleccionarSubcategoriaFiltro}
+                alternarFiltro={alternarFiltroCategoria}
+                limpiarFiltros={() => setFiltrosCategoriaSeleccionados([])}
+              />
+
+              <Productos
+                productos={productosCategoriaFiltrados}
+                verProducto={verProducto}
+                titulo=""
+                vacio="No encontramos productos en esta categoria."
+              />
+            </div>
           </section>
         ) : (
           <>
@@ -606,26 +681,37 @@ function App() {
                   key={banner.titulo}
                   style={
                     banner.imagen
-                      ? { backgroundImage: `url(${banner.imagen})` }
+                      ? {
+                          backgroundImage: `url(${banner.imagen})`,
+                          backgroundPosition: banner.posicion || 'center'
+                        }
                       : undefined
                   }
                 />
               ))}
 
-              <div className="hero-overlay">
-                <div className="hero-content">
-                  <span className="hero-kicker">
-                    {banners[bannerActivo].etiqueta}
-                  </span>
+              <div
+                className={
+                  banners[bannerActivo].mostrarTexto === false
+                    ? 'hero-overlay hero-overlay-sin-texto'
+                    : 'hero-overlay'
+                }
+              >
+                {banners[bannerActivo].mostrarTexto !== false && (
+                  <div className="hero-content">
+                    <span className="hero-kicker">
+                      {banners[bannerActivo].etiqueta}
+                    </span>
 
-                  <h2>{banners[bannerActivo].titulo}</h2>
+                    <h2>{banners[bannerActivo].titulo}</h2>
 
-                  <p>{banners[bannerActivo].texto}</p>
+                    <p>{banners[bannerActivo].texto}</p>
 
-                  <a href={banners[bannerActivo].href}>
-                    <button>{banners[bannerActivo].boton}</button>
-                  </a>
-                </div>
+                    <a href={banners[bannerActivo].href}>
+                      <button>{banners[bannerActivo].boton}</button>
+                    </a>
+                  </div>
+                )}
 
                 <div className="hero-controls" aria-label="Controles del banner">
                   <button onClick={() => cambiarBanner(-1)} aria-label="Banner anterior">
@@ -655,12 +741,14 @@ function App() {
 
             <Productos
               productos={productosHome}
-              agregarAlCarrito={agregarAlCarrito}
               verProducto={verProducto}
               titulo={busquedaNormalizada ? 'Resultados de busqueda' : 'Productos destacados'}
             />
 
-            <Excursiones excursiones={excursionesFiltradas} telefono={telefonoWhatsApp} />
+            <Excursiones
+              excursiones={excursionesFiltradas}
+              verExcursion={verExcursion}
+            />
 
             <Contacto telefono={telefonoWhatsApp} />
           </>
@@ -670,9 +758,175 @@ function App() {
   )
 }
 
+function ExcursionDetalle({ excursion, volver, telefono }) {
+  const formatoPrecio = new Intl.NumberFormat('es-AR')
+  const [imagenActiva, setImagenActiva] = useState(0)
+
+  if (!excursion) {
+    return (
+      <section className="producto-detalle-page">
+        <button className="volver-catalogo-btn" onClick={volver}>
+          {'< Volver al inicio'}
+        </button>
+        <p className="sin-resultados">No encontramos esta excursion.</p>
+      </section>
+    )
+  }
+
+  const imagenes = excursion.imagenes?.length > 0
+    ? excursion.imagenes
+    : [{ image_url: excursion.imagen }]
+  const imagenPrincipal = imagenes[imagenActiva]?.image_url || excursion.imagen
+  const mensajeWhatsApp = [
+    `Hola, quiero consultar por la excursion: ${excursion.titulo}`,
+    `Salida: ${excursion.lugarSalida}`,
+    excursion.lugarExcursion ? `Lugar de excursion: ${excursion.lugarExcursion}` : '',
+    `Duracion: ${excursion.duracion}`,
+    `Precio aproximado: $${formatoPrecio.format(excursion.precio)}`
+  ]
+    .filter(Boolean)
+    .join('\n')
+
+  return (
+    <section className="producto-detalle-page">
+      <button className="volver-catalogo-btn" onClick={volver}>
+        {'< Volver al inicio'}
+      </button>
+
+      <div className="producto-detalle-layout">
+        <div className="producto-detalle-galeria">
+          {imagenPrincipal && (
+            <img
+              className="producto-detalle-imagen"
+              src={imagenPrincipal}
+              alt={excursion.titulo}
+            />
+          )}
+
+          {imagenes.length > 1 && (
+            <div className="producto-detalle-thumbs">
+              {imagenes.map((imagen, index) => (
+                <button
+                  className={imagenActiva === index ? 'activo' : ''}
+                  key={imagen.id || imagen.image_url}
+                  onClick={() => setImagenActiva(index)}
+                  aria-label={`Ver foto ${index + 1}`}
+                >
+                  <img src={imagen.image_url} alt="" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="producto-detalle-info excursion-detalle-info">
+          <span className="section-kicker">Excursion</span>
+          <h2>{excursion.titulo}</h2>
+          <h3>${formatoPrecio.format(excursion.precio)}</h3>
+
+          <div className="excursion-detalle-meta">
+            <span>Salida: {excursion.lugarSalida}</span>
+            {excursion.lugarExcursion && (
+              <span>Lugar de excursion: {excursion.lugarExcursion}</span>
+            )}
+            <span>Duracion: {excursion.duracion}</span>
+          </div>
+
+          <p className="producto-detalle-descripcion">{excursion.descripcion}</p>
+
+          <a
+            href={`https://wa.me/${telefono}?text=${encodeURIComponent(mensajeWhatsApp)}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button>Consultar por WhatsApp</button>
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FiltrosCategoria({
+  categoria,
+  subcategorias,
+  subcategoriaActiva,
+  filtros,
+  filtrosSeleccionados,
+  orden,
+  cambiarOrden,
+  seleccionarSubcategoria,
+  alternarFiltro,
+  limpiarFiltros
+}) {
+  return (
+    <aside className="categoria-filtros" aria-label="Filtros de categoria">
+      <div className="categoria-filtros-grupo">
+        <h3>Subcategorias</h3>
+        <button
+          type="button"
+          className={!subcategoriaActiva ? 'activo' : ''}
+          onClick={() => seleccionarSubcategoria('')}
+        >
+          Todas las {categoria.nombre}
+        </button>
+
+        {subcategorias.map((subcategoria) => (
+          <button
+            type="button"
+            className={
+              subcategoriaActiva?.slug === subcategoria.slug ? 'activo' : ''
+            }
+            key={subcategoria.slug}
+            onClick={() => seleccionarSubcategoria(subcategoria.slug)}
+          >
+            {subcategoria.nombre}
+          </button>
+        ))}
+      </div>
+
+      {subcategoriaActiva && filtros.length > 0 && (
+        <div className="categoria-filtros-grupo categoria-filtros-valores">
+          <h3>Filtros</h3>
+          {filtros.map((filtro) => (
+            <label key={filtro.id}>
+              <input
+                type="checkbox"
+                checked={filtrosSeleccionados.includes(filtro.id)}
+                onChange={() => alternarFiltro(filtro.id)}
+              />
+              {filtro.nombre}
+            </label>
+          ))}
+          {filtrosSeleccionados.length > 0 && (
+            <button type="button" onClick={limpiarFiltros}>
+              Limpiar filtros
+            </button>
+          )}
+        </div>
+      )}
+
+      <label className="categoria-orden">
+        Ordenar
+        <select
+          value={orden}
+          onChange={(event) => cambiarOrden(event.target.value)}
+        >
+          <option value="recientes">Mas recientes</option>
+          <option value="precio-menor">Menor precio</option>
+          <option value="precio-mayor">Mayor precio</option>
+        </select>
+      </label>
+    </aside>
+  )
+}
+
 function ProductoDetalle({ producto, volver, agregarAlCarrito }) {
   const formatoPrecio = new Intl.NumberFormat('es-AR')
   const [imagenActiva, setImagenActiva] = useState(0)
+  const [colorSeleccionado, setColorSeleccionado] = useState('')
+  const [errorColor, setErrorColor] = useState('')
+  const [cantidadSeleccionada, setCantidadSeleccionada] = useState(1)
 
   if (!producto) {
     return (
@@ -689,6 +943,21 @@ function ProductoDetalle({ producto, volver, agregarAlCarrito }) {
     ? producto.imagenes
     : [{ image_url: producto.imagen }]
   const imagenPrincipal = imagenes[imagenActiva]?.image_url || producto.imagen
+  const requiereColor = producto.colores?.length > 0
+
+  function manejarAgregarDetalle() {
+    if (requiereColor && !colorSeleccionado) {
+      setErrorColor('Elegi un color antes de agregarlo al carrito.')
+      return
+    }
+
+    const agregado = agregarAlCarrito(
+      producto,
+      colorSeleccionado,
+      cantidadSeleccionada
+    )
+    if (agregado) setErrorColor('')
+  }
 
   return (
     <section className="producto-detalle-page">
@@ -731,13 +1000,208 @@ function ProductoDetalle({ producto, volver, agregarAlCarrito }) {
           <p className="producto-detalle-marca">{producto.marca}</p>
           <h3>${formatoPrecio.format(producto.precio)}</h3>
           <p className="producto-detalle-descripcion">{producto.descripcion}</p>
-          <button onClick={() => agregarAlCarrito(producto)}>
+
+          {requiereColor && (
+            <div className="producto-detalle-colores">
+              <strong>Color</strong>
+              <div className="producto-color-options detalle">
+                {producto.colores.map((color) => (
+                  <button
+                    type="button"
+                    className={
+                      colorSeleccionado === color
+                        ? 'producto-color-chip activo'
+                        : 'producto-color-chip'
+                    }
+                    key={color}
+                    onClick={() => {
+                      setColorSeleccionado(color)
+                      setErrorColor('')
+                    }}
+                  >
+                    {color}
+                  </button>
+                ))}
+              </div>
+              {errorColor && <span className="producto-color-error">{errorColor}</span>}
+            </div>
+          )}
+
+          <div className="producto-detalle-cantidad">
+            <strong>Cantidad</strong>
+            <div className="cantidad-control">
+              <button
+                type="button"
+                onClick={() =>
+                  setCantidadSeleccionada((cantidadActual) =>
+                    Math.max(cantidadActual - 1, 1)
+                  )
+                }
+              >
+                -
+              </button>
+              <input
+                type="number"
+                min="1"
+                step="1"
+                value={cantidadSeleccionada}
+                onChange={(event) =>
+                  setCantidadSeleccionada(
+                    Math.max(Number(event.target.value) || 1, 1)
+                  )
+                }
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setCantidadSeleccionada((cantidadActual) => cantidadActual + 1)
+                }
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <button onClick={manejarAgregarDetalle}>
             Agregar al carrito
           </button>
         </div>
       </div>
     </section>
   )
+}
+
+function ordenarProductosCategoria(productos, orden) {
+  const productosOrdenados = [...productos]
+
+  if (orden === 'precio-menor') {
+    return productosOrdenados.sort((a, b) => a.precio - b.precio)
+  }
+
+  if (orden === 'precio-mayor') {
+    return productosOrdenados.sort((a, b) => b.precio - a.precio)
+  }
+
+  return productosOrdenados.sort(
+    (a, b) => new Date(b.creado) - new Date(a.creado)
+  )
+}
+
+function obtenerResultadosBusqueda({
+  busqueda,
+  categorias,
+  subdivisionesCatalogo,
+  productos,
+  excursiones
+}) {
+  const termino = normalizarTexto(busqueda)
+  if (termino.length < 2) return []
+
+  const resultados = []
+  const coincideExcursiones = ['excursion', 'excursiones', 'salida', 'salidas'].some(
+    (texto) => texto.includes(termino) || termino.includes(texto)
+  )
+
+  if (coincideExcursiones) {
+    resultados.push({
+      id: 'seccion-excursiones',
+      tipo: 'seccion',
+      titulo: 'Ir a Excursiones',
+      detalle: 'Ver todas las salidas disponibles',
+      seccion: 'excursiones'
+    })
+  }
+
+  categorias.forEach((categoria) => {
+    if (normalizarTexto(categoria.nombre).includes(termino)) {
+      resultados.push({
+        id: `categoria-${categoria.slug}`,
+        tipo: 'categoria',
+        titulo: categoria.nombre,
+        detalle: 'Ver categoria',
+        slug: categoria.slug
+      })
+    }
+
+    ;(subdivisionesCatalogo[categoria.slug] || []).forEach((subcategoria) => {
+      if (normalizarTexto(subcategoria.nombre).includes(termino)) {
+        resultados.push({
+          id: `subcategoria-${categoria.slug}-${subcategoria.slug}`,
+          tipo: 'subcategoria',
+          titulo: subcategoria.nombre,
+          detalle: categoria.nombre,
+          categoriaSlug: categoria.slug,
+          slug: subcategoria.slug
+        })
+      }
+    })
+  })
+
+  productos
+    .filter((producto) =>
+      [
+        producto.nombre,
+        producto.marca,
+        producto.categoria,
+        producto.subcategoriaNombre
+      ]
+        .map(normalizarTexto)
+        .join(' ')
+        .includes(termino)
+    )
+    .slice(0, 5)
+    .forEach((producto) => {
+      resultados.push({
+        id: `producto-${producto.id}`,
+        tipo: 'producto',
+        titulo: producto.nombre,
+        detalle: `${producto.categoria}${
+          producto.subcategoriaNombre ? ` > ${producto.subcategoriaNombre}` : ''
+        }`,
+        item: producto
+      })
+    })
+
+  excursiones
+    .filter((excursion) =>
+      [
+        excursion.titulo,
+        excursion.descripcion,
+        excursion.lugarSalida,
+        excursion.lugarExcursion,
+        excursion.duracion
+      ]
+        .map(normalizarTexto)
+        .join(' ')
+        .includes(termino)
+    )
+    .slice(0, 5)
+    .forEach((excursion) => {
+      resultados.push({
+        id: `excursion-${excursion.id}`,
+        tipo: 'excursion',
+        titulo: excursion.titulo,
+        detalle: excursion.lugarExcursion || 'Ver excursion',
+        item: excursion
+      })
+    })
+
+  return resultados.slice(0, 12)
+}
+
+function normalizarTexto(texto = '') {
+  return String(texto)
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}
+
+function obtenerColoresProducto(producto) {
+  return (producto.attributes || [])
+    .filter((attribute) => attribute.name === 'Color')
+    .map((attribute) => attribute.value)
+    .filter(Boolean)
 }
 
 export default App
