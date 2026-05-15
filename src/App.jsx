@@ -122,7 +122,7 @@ const banners = [
   }
 ]
 
-const telefonoWhatsApp = '5491133870116'
+const telefonoWhatsApp = '5491130352558'
 
 function adaptarCategoria(categoria) {
   const categoriaInicial = categoriasIniciales.find(
