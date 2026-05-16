@@ -2292,7 +2292,8 @@ nav a:hover {
   gap: 10px;
 }
 
-.admin-filter-subcategories {
+.admin-filter-subcategories,
+.admin-product-filters-field {
   display: grid;
   gap: 12px;
   margin-top: 16px;
@@ -2319,19 +2320,39 @@ nav a:hover {
   padding: 7px 11px;
 }
 
-.admin-filter-subcategories p {
+.admin-filter-subcategories p,
+.admin-product-filters-field p {
   margin: 0;
   color: #5b6c7b;
   font-size: 14px;
 }
 
-.admin-filter-subcategories-list {
+.admin-product-filters-field strong,
+.admin-product-filters-field span {
+  display: block;
+}
+
+.admin-product-filters-field strong {
+  color: #082742;
+  font-size: 15px;
+}
+
+.admin-product-filters-field span {
+  margin-top: 4px;
+  color: #5b6c7b;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.admin-filter-subcategories-list,
+.admin-product-filters-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
-.admin-filter-subcategories-list label {
+.admin-filter-subcategories-list label,
+.admin-product-filters-list label {
   min-height: 40px;
   padding: 9px 10px;
   border: 1px solid #dce5ec;
@@ -2344,7 +2365,8 @@ nav a:hover {
   font-size: 13px;
 }
 
-.admin-filter-subcategories-list input {
+.admin-filter-subcategories-list input,
+.admin-product-filters-list input {
   width: 16px;
   min-height: 16px;
   padding: 0;
@@ -2550,7 +2572,8 @@ nav a:hover {
     grid-template-columns: 1fr;
   }
 
-  .admin-filter-subcategories-list {
+  .admin-filter-subcategories-list,
+  .admin-product-filters-list {
     grid-template-columns: 1fr;
   }
 }

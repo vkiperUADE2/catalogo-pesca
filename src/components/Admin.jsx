@@ -44,7 +44,7 @@ const productoInicial = {
   subcategory_id: '',
   description: '',
   is_featured: false,
-  filter_id: '',
+  filter_ids: [],
   available_colors: [],
   custom_color: ''
 }
@@ -300,8 +300,8 @@ function Admin() {
     setProductoForm((productoActual) => ({
       ...productoActual,
       [campo]: valor,
-      ...(campo === 'category_id' ? { subcategory_id: '', filter_id: '' } : {}),
-      ...(campo === 'subcategory_id' ? { filter_id: '' } : {})
+      ...(campo === 'category_id' ? { subcategory_id: '', filter_ids: [] } : {}),
+      ...(campo === 'subcategory_id' ? { filter_ids: [] } : {})
     }))
   }
 
@@ -380,6 +380,14 @@ function Admin() {
         throw new Error(`Un producto puede tener como maximo ${MAX_IMAGENES} imagenes.`)
       }
 
+      const filterIds = (productoForm.filter_ids || []).filter((filterId) =>
+        filtrosDisponiblesProducto.some((filtro) => filtro.id === filterId)
+      )
+
+      if (filtrosDisponiblesProducto.length > 0 && filterIds.length === 0) {
+        throw new Error('Tenes que elegir al menos un filtro para esta subcategoria.')
+      }
+
       let productoGuardado
 
       if (productoEditandoId) {
@@ -396,10 +404,7 @@ function Admin() {
         productoGuardado.id,
         productoForm.available_colors
       )
-      await actualizarFiltrosProducto(
-        productoGuardado.id,
-        productoForm.filter_id ? [productoForm.filter_id] : []
-      )
+      await actualizarFiltrosProducto(productoGuardado.id, filterIds)
 
       for (const [indice, slot] of imagenesProducto.entries()) {
         if (!slot.archivo) continue
@@ -1081,7 +1086,7 @@ function Admin() {
       subcategory_id: producto.subcategory_id || '',
       description: producto.description,
       is_featured: producto.is_featured,
-      filter_id: producto.filter_ids?.[0] || '',
+      filter_ids: producto.filter_ids || [],
       available_colors: obtenerColoresProducto(producto),
       custom_color: ''
     })
@@ -1977,6 +1982,17 @@ function FormularioProducto({
     actualizarProductoForm('custom_color', '')
   }
 
+  function alternarFiltroProducto(filterId) {
+    const filtrosActuales = productoForm.filter_ids || []
+
+    actualizarProductoForm(
+      'filter_ids',
+      filtrosActuales.includes(filterId)
+        ? filtrosActuales.filter((id) => id !== filterId)
+        : [...filtrosActuales, filterId]
+    )
+  }
+
   return (
     <form className="admin-product-form" onSubmit={manejarGuardarProducto}>
       <h3>{productoEditandoId ? 'Editar producto' : 'Nuevo producto'}</h3>
@@ -2046,22 +2062,6 @@ function FormularioProducto({
           </select>
         </label>
 
-        <label>
-          Filtro
-          <select
-            value={productoForm.filter_id}
-            onChange={(event) => actualizarProductoForm('filter_id', event.target.value)}
-            disabled={!productoForm.subcategory_id || filtrosDisponiblesProducto.length === 0}
-          >
-            <option value="">No aplica</option>
-            {filtrosDisponiblesProducto.map((filtro) => (
-              <option key={filtro.id} value={filtro.id}>
-                {filtro.name}
-              </option>
-            ))}
-          </select>
-        </label>
-
         <label className="admin-checkbox-label">
           <input
             type="checkbox"
@@ -2072,6 +2072,35 @@ function FormularioProducto({
           />
           Destacado
         </label>
+      </div>
+
+      <div className="admin-product-filters-field">
+        <div>
+          <strong>Filtros</strong>
+          <span>
+            {filtrosDisponiblesProducto.length > 0
+              ? 'Elegí uno o más filtros donde mostrar este producto.'
+              : 'No hay filtros para la subcategoria seleccionada.'}
+          </span>
+        </div>
+        {!productoForm.subcategory_id ? (
+          <p>Selecciona una subcategoria para ver sus filtros.</p>
+        ) : filtrosDisponiblesProducto.length > 0 ? (
+          <div className="admin-product-filters-list">
+            {filtrosDisponiblesProducto.map((filtro) => (
+              <label key={filtro.id}>
+                <input
+                  type="checkbox"
+                  checked={(productoForm.filter_ids || []).includes(filtro.id)}
+                  onChange={() => alternarFiltroProducto(filtro.id)}
+                />
+                {filtro.name}
+              </label>
+            ))}
+          </div>
+        ) : (
+          <p>Este producto se va a mostrar sin filtros especificos.</p>
+        )}
       </div>
 
       <label>
