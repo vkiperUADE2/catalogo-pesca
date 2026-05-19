@@ -3137,6 +3137,10 @@ function obtenerMensajeErrorAdmin(error, entidad) {
     return mensajes[entidad] || 'Este elemento ya fue creado.'
   }
 
+  if (esErrorLimiteViejoImagenes(error)) {
+    return 'La base de datos todavia tiene el limite anterior de 5 imagenes. Aplica la migracion de Supabase para permitir hasta 10.'
+  }
+
   const mensajesGenericos = {
     producto: 'No se pudo guardar el producto.',
     categoria: 'No se pudo guardar la categoria.',
@@ -3153,6 +3157,19 @@ function esErrorDuplicado(error) {
     error?.code === '23505' ||
     error?.message?.includes('duplicate key value') ||
     error?.message?.includes('violates unique constraint')
+  )
+}
+
+function esErrorLimiteViejoImagenes(error) {
+  const mensaje = (error?.message || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+
+  return (
+    mensaje.includes('imagen') &&
+    mensaje.includes('5') &&
+    (mensaje.includes('maximo') || mensaje.includes('mas de'))
   )
 }
 
