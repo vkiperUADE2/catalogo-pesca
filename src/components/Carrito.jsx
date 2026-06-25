@@ -110,7 +110,7 @@ function Carrito({
                 rel="noreferrer"
               >
                 <button className="whatsapp-btn">
-                  Consultar por WhatsApp
+                  Confirmar compra
                 </button>
               </a>
             </div>

@@ -5,6 +5,7 @@ import Categorias from './components/Categorias'
 import Excursiones from './components/Excursiones'
 import Carrito from './components/Carrito'
 import Contacto from './components/Contacto'
+import DefensaConsumidor from './components/DefensaConsumidor'
 import Admin from './components/Admin'
 import bannerLocal from './assets/banner-local.png'
 import bannerLocalMobile from './assets/banner-local-mobile.png'
@@ -764,6 +765,7 @@ function App() {
             />
 
             <Contacto telefono={telefonoWhatsApp} />
+            <DefensaConsumidor />
           </>
         )}
       </main>
