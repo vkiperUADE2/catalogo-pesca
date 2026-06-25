@@ -15,10 +15,10 @@ function DefensaConsumidor() {
               Ante cualquier consulta o reclamo escribinos a nuestro correo electrónico.
             </p>
             <a
-              href="mailto:geams20@gmail.com"
+              href="mailto:kayaksaccesoriosymas@gmail.com"
               className="defensa-link"
             >
-              geams20@gmail.com
+              kayaksaccesoriosymas@gmail.com
             </a>
           </div>
 
@@ -37,10 +37,16 @@ function DefensaConsumidor() {
           </div>
 
           <div className="defensa-item">
-            <h3>Libre de quejas</h3>
+            <h3>Libro de quejas</h3>
             <p>
-              Este comercio no registra sanciones por parte del organismo de Defensa del Consumidor.
+              Podés registrar tu queja enviando un correo electrónico a:
             </p>
+            <a
+              href="mailto:kayaksaccesoriosymas@gmail.com"
+              className="defensa-link"
+            >
+              kayaksaccesoriosymas@gmail.com
+            </a>
           </div>
 
           <div className="defensa-item">
